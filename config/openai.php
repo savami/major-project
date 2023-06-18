@@ -14,5 +14,4 @@ return [
 
     'api_key' => env('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'),
     'organization' => env('Personal'),
-
 ];
