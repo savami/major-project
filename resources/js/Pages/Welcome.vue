@@ -1,10 +1,31 @@
 <script setup>
 import {Head, Link} from '@inertiajs/vue3';
+import {ref} from "vue";
 
 defineProps({
     canLogin: Boolean,
     canRegister: Boolean,
 });
+
+const clickedLogin = ref(false);
+const clickedRegister = ref(false);
+const clickedDashboard = ref(false);
+
+const onClickLogin = () => {
+    clickedLogin.value = true;
+    setTimeout(() => clickedLogin.value = false, 1000); // Remove the class after 1 second
+
+}
+
+const onClickRegister = () => {
+    clickedRegister.value = true;
+    setTimeout(() => clickedRegister.value = false, 1000); // Remove the class after 1 second
+}
+
+const onClickDashboard = () => {
+    clickedDashboard.value = true;
+    setTimeout(() => clickedDashboard.value = false, 1000); // Remove the class after 1 second
+}
 </script>
 
 <template>
@@ -17,15 +38,21 @@ defineProps({
 
         <div v-if="canLogin" class="flex space-x-4">
             <Link v-if="$page.props.auth.user" :href="route('dashboard')"
-                  class="bg-white py-2 px-4 rounded-md text-indigo-500 hover:text-indigo-900 focus:outline-none">
-                Dashboard
+                  @click="onClickDashboard"
+                  :class="{'animate-ping' : clickedDashboard}"
+                  class="font-semibold bg-indigo-500 py-2 px-4 rounded-md text-white hover:bg-white hover:text-indigo-500 hover:scale-110 transition-all duration-300 focus:outline-none">
+                Go to dashboard
             </Link>
             <template v-else>
                 <Link :href="route('login')"
+                      @click="onClickLogin"
+                      :class="{'animate-ping' : clickedLogin}"
                       class="font-semibold bg-indigo-500 py-2 px-4 rounded-md text-white hover:bg-white hover:text-indigo-500 hover:scale-110 transition-all duration-300 focus:outline-none">
                     Sign in
                 </Link>
                 <Link v-if="canRegister" :href="route('register')"
+                      @click="onClickRegister"
+                      :class="{'animate-ping' : clickedRegister}"
                       class="font-semibold bg-indigo-500 py-2 px-4 rounded-md text-white hover:bg-white hover:text-indigo-500 hover:scale-110 transition-all duration-300 focus:outline-none">
                     Register
                 </Link>
