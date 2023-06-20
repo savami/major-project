@@ -22,37 +22,59 @@ const questions = [
     {
         id: '1',
         title: 'What is the subject of the photos?',
-        example: 'Example: A person, a landscape, a city, an object, etc.'
+        example: 'Example: A person, a landscape, a city, an object, etc.',
+        answerType: 'text'
     },
     {
         id: '2',
         title: 'What mood should the photos be?',
-        example: 'Example: Happy, sad, dark, bright, etc.'
+        example: 'Example: Happy, sad, dark, bright, etc.',
+        answerType: 'text'
     },
     {
         id: '3',
         title: 'Should the photos be in portrait or landscape orientation?',
-        example: ''
+        example: '',
+        answerType: 'multipleChoice',
+        options: [
+            { id: '1', title: 'Portrait' },
+            { id: '2', title: 'Landscape' },
+            { id: '3', title: 'Both' }
+        ]
     },
     {
         id: '4',
         title: 'Are there specific elements to be included in the photo?',
-        example: 'Example: Certain type of building, a specific color, etc.'
+        example: 'Example: Certain type of building, a specific color, etc.',
+        answerType: 'text'
     },
     {
         id: '5',
         title: 'Do you prefer a minimalist style with lots of empty space, or a more detailed photo with many elements?',
-        example: ''
+        example: '',
+        answerType: 'multipleChoice',
+        options: [
+            { id: '1', title: 'Minimalist' },
+            { id: '2', title: 'Detailed' },
+            { id: '3', title: 'Both' }
+        ]
     },
     {
         id: '6',
         title: 'Do you prefer a modern or vintage setting?',
-        example: ''
+        example: '',
+        answerType: 'multipleChoice',
+        options: [
+            { id: '1', title: 'Modern' },
+            { id: '2', title: 'Vintage' },
+            { id: '3', title: 'Both' }
+        ]
     },
     {
         id: '7',
         title: 'What is the purpose of the photo?',
-        example: 'Example: Professional style for businesses, while more creative for personal'
+        example: 'Example: Professional style for businesses, while more creative for personal',
+        answerType: 'text'
     },
 ];
 
