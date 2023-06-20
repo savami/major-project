@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\JobController;
+use App\Http\Controllers\PhotoJobController;
+use App\Http\Controllers\TextJobController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -34,6 +35,11 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
-    Route::get('/jobs/create', [JobController::class, 'create'])->name('jobs.create');
-    Route::post('/jobs', [JobController::class, 'store'])->name('jobs.store');
+    // Text jobs routes
+    Route::get('/text-job/create', [TextJobController::class, 'create'])->name('textJobs.create');
+    Route::post('/text-jobs', [TextJobController::class, 'store'])->name('textJobs.store');
+
+    // Photo jobs routes
+    Route::get('/photo-jobs/create', [PhotoJobController::class, 'create'])->name('photoJobs.create');
+    Route::post('/photo-jobs', [PhotoJobController::class, 'store'])->name('photoJobs.store');
 });
