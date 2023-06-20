@@ -38,7 +38,7 @@ const submit = () => {
                     id="name"
                     v-model="form.name"
                     type="text"
-                    class="mt-1 block w-full"
+                    class="mt-1 block w-full bg-transparent"
                     required
                     autofocus
                     autocomplete="name"
@@ -52,7 +52,7 @@ const submit = () => {
                     id="email"
                     v-model="form.email"
                     type="email"
-                    class="mt-1 block w-full"
+                    class="mt-1 block w-full bg-transparent"
                     required
                     autocomplete="username"
                 />
@@ -65,7 +65,7 @@ const submit = () => {
                     id="password"
                     v-model="form.password"
                     type="password"
-                    class="mt-1 block w-full"
+                    class="mt-1 block w-full bg-transparent"
                     required
                     autocomplete="new-password"
                 />
@@ -78,7 +78,7 @@ const submit = () => {
                     id="password_confirmation"
                     v-model="form.password_confirmation"
                     type="password"
-                    class="mt-1 block w-full"
+                    class="mt-1 block w-full bg-transparent"
                     required
                     autocomplete="new-password"
                 />
@@ -99,7 +99,7 @@ const submit = () => {
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <Link :href="route('login')" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <Link :href="route('login')" class="underline text-sm text-white hover:text-indigo-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 transition ease-in-out duration-200">
                     Already registered?
                 </Link>
 

@@ -86,59 +86,17 @@ const onClickDashboard = () => {
 </template>
 
 <style scoped>
-/* .bg-animated-gradient {
-    background: linear-gradient(207deg, #e6c304, #e69b04, #e66a04, #33e370, #5ed9d5, #cb86ea);
-    background-size: 1200% 1200%;
-
-    -webkit-animation: BgGradient 14s ease infinite;
-    -moz-animation: BgGradient 14s ease infinite;
-    animation: BgGradient 14s ease infinite;
-}
-
-@-webkit-keyframes BgGradient {
-    0% {
-        background-position: 0% 77%
-    }
-    50% {
-        background-position: 100% 24%
-    }
-    100% {
-        background-position: 0% 77%
-    }
-}
-
-@-moz-keyframes BgGradient {
-    0% {
-        background-position: 0% 77%
-    }
-    50% {
-        background-position: 100% 24%
-    }
-    100% {
-        background-position: 0% 77%
-    }
-}
-
-@keyframes BgGradient {
-    0% {
-        background-position: 0% 77%
-    }
-    50% {
-        background-position: 100% 24%
-    }
-    100% {
-        background-position: 0% 77%
-    }
-} */
-
 .background {
     margin: auto;
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     overflow: auto;
     background: linear-gradient(315deg, rgba(101, 0, 94, 1) 3%, rgba(60, 132, 206, 1) 38%, rgb(33, 133, 126) 68%, rgba(255, 25, 25, 1) 98%);
-    animation: gradient 15s ease infinite;
     background-size: 400% 400%;
     background-attachment: fixed;
+    animation: gradient 15s ease infinite, fadeIn 1 1s ease-out;
+    -webkit-animation: gradient 15s ease infinite, fadeIn 1 1s ease-out;
+    -moz-animation: gradient 15s ease infinite, fadeIn 1 1s ease-out;
+    -o-animation: gradient 15s ease infinite, fadeIn 1 1s ease-out;
 }
 
 @keyframes gradient {
@@ -199,5 +157,26 @@ const onClickDashboard = () => {
     100% {
         transform: translateX(1);
     }
+}
+
+/* Switch Page Animations */
+@-webkit-keyframes fadeIn{
+    from{opacity: 0;}
+    to{opacity: 1;}
+}
+
+@-moz-keyframes fadeIn{
+    from{opacity: 0;}
+    to{opacity: 1;}
+}
+
+@-o-keyframes fadeIn{
+    from{opacity: 0;}
+    to{opacity: 1;}
+}
+
+@keyframes fadeIn{
+    from{opacity: 0;}
+    to{opacity: 1;}
 }
 </style>
