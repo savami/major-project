@@ -50,7 +50,7 @@ const logout = () => {
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink class="text-white hover:text-indigo-300 border-b-indigo-300" :href="route('dashboard')" :active="route().current('dashboard')">
+                                <NavLink class="text-white hover:text-white" :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
                             </div>
@@ -310,7 +310,7 @@ const logout = () => {
     margin: 0;
     height: 100vh;
     font-weight: 100;
-    background: radial-gradient(#9F0A2B,#1f1013);
+    background: radial-gradient(#0d91af,#1f1013);
     -webkit-overflow-Y: hidden;
     -moz-overflow-Y: hidden;
     -o-overflow-Y: hidden;
