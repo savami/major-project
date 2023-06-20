@@ -10,7 +10,7 @@ class TextJobController extends Controller
 {
     public function create()
     {
-        return Inertia::render('TextJobs/Create');
+        return Inertia::render('TextJobs/TextJobCreate');
     }
 
     public function store()

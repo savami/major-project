@@ -10,7 +10,7 @@ class PhotoJobController extends Controller
 {
     public function create()
     {
-        return Inertia::render('PhotoJobs/Create');
+        return Inertia::render('PhotoJobs/PhotoJobCreate');
     }
 
     public function store(Request $request)
