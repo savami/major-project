@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jobs', function (Blueprint $table) {
+        Schema::create('text_jobs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->string('photo_type');
-            $table->string('photo_contents');
-            $table->enum('photo_style', ['portrait', 'landscape'])->default('landscape');
             $table->string('text_topic');
             $table->string('text_keywords');
             $table->integer('text_length');
@@ -36,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('jobs');
+        Schema::dropIfExists('text_jobs');
     }
 };

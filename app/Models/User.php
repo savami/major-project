@@ -59,8 +59,13 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function jobs()
+    public function textJobs()
     {
-        return $this->hasMany(Job::class);
+        return $this->hasMany(TextJob::class);
+    }
+
+    public function photoJobs()
+    {
+        return $this->hasMany(PhotoJob::class);
     }
 }
