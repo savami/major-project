@@ -1,22 +1,22 @@
 <template>
     <AnimatedBackgroundLayout>
-        <div class="py-12 flex">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <FormQuestion
-                    v-if="currentQuestion"
-                    :question="currentQuestion"
-                    @answer="handleAnswer"
-                />
-                <button @click="nextQuestion">Next</button>
+            <div class="py-12 w-full">
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <FormQuestion
+                        v-if="currentQuestion"
+                        :question="currentQuestion"
+                        @answer="handleAnswer"
+                    />
+                </div>
             </div>
-        </div>
     </AnimatedBackgroundLayout>
 </template>
 
 <script setup>
-import {ref, reactive, computed} from 'vue';
+import {ref, computed} from 'vue';
 import FormQuestion from "../../Components/Forms/FormQuestion.vue";
 import AnimatedBackgroundLayout from "../../Layouts/AnimatedBackgroundLayout.vue";
+import {useForm} from "@inertiajs/vue3";
 
 const questions = [
     {
@@ -37,9 +37,17 @@ const questions = [
         example: '',
         answerType: 'multipleChoice',
         options: [
-            { id: '1', title: 'Portrait' },
-            { id: '2', title: 'Landscape' },
-            { id: '3', title: 'Both' }
+            {
+                id: '1',
+                title: 'Portrait',
+                background: '/img/portrait-happy-man-showing-blank-signboard-isolated-white-background.jpg'
+            },
+            {
+                id: '2',
+                title: 'Landscape',
+                background: '/img/sad-guy-holding-black-frame.jpg'
+            },
+            // { id: '3', title: 'Both' }
         ]
     },
     {
@@ -54,9 +62,9 @@ const questions = [
         example: '',
         answerType: 'multipleChoice',
         options: [
-            { id: '1', title: 'Minimalist' },
-            { id: '2', title: 'Detailed' },
-            { id: '3', title: 'Both' }
+            {id: '1', title: 'Minimalist'},
+            {id: '2', title: 'Detailed'},
+            {id: '3', title: 'Both'}
         ]
     },
     {
@@ -65,9 +73,9 @@ const questions = [
         example: '',
         answerType: 'multipleChoice',
         options: [
-            { id: '1', title: 'Modern' },
-            { id: '2', title: 'Vintage' },
-            { id: '3', title: 'Both' }
+            {id: '1', title: 'Modern'},
+            {id: '2', title: 'Vintage'},
+            {id: '3', title: 'Both'}
         ]
     },
     {
@@ -80,12 +88,23 @@ const questions = [
 
 let currentQuestionIndex = ref(0);
 
-let formAnswers = reactive({});
+const {data, post, reset} = useForm({
+    q1: '',
+    q2: '',
+    q3: '',
+    q4: '',
+    q5: '',
+    q6: '',
+    q7: '',
+})
+
+// let formAnswers = reactive({});
 
 const currentQuestion = computed(() => questions[currentQuestionIndex.value]);
 
 const handleAnswer = ({question, answer}) => {
-    formAnswers[question] = answer;
+    data[`q${question}`] = answer;
+    nextQuestion();
 };
 
 const nextQuestion = () => {
@@ -96,6 +115,8 @@ const nextQuestion = () => {
 };
 
 const submitForm = () => {
-    // TODO: Handle submit
+    post('/photo-jobs').then(() => {
+        reset('q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7');
+    });
 };
 </script>
