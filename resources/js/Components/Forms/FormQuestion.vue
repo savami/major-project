@@ -7,9 +7,9 @@
                 v-model="answer"
                 type="text"
                 placeholder=" "
-                class="block py-2.5 px-2.5 w-full text-sm text-white bg-transparent border-2 rounded-md border-white appearance-none focus:outline-none focus:ring-0 focus:border-indigo-600 peer"
+                class="block py-2.5 px-4 w-full text-sm text-white bg-transparent border-1 rounded-md border-white appearance-none focus:outline-none focus:ring-0 focus:border-2 focus:border-white peer"
             />
-            <label for="floating_email" class="peer-focus:font-medium absolute text-sm text-white duration-300 pl-4 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:pl-0.5 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-90 peer-focus:-translate-y-8">{{ question.example }}</label>
+            <label class="peer-focus:font-medium absolute text-sm text-white duration-300 pl-4 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:pl-0.5 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-90 peer-focus:-translate-y-9">{{ question.example }}</label>
         </div>
     </div>
 
