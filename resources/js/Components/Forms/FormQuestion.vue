@@ -1,9 +1,8 @@
 <template>
     <div class="flex flex-col justify-between h-full">
         <div
-            class="text-white bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg py-5 px-8 flex flex-col items-center justify-center">
-            <h2 class="text-3xl font-bold mb-10 mt-8">{{ question.title }}</h2>
-
+            class="text-white bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg py-5 px-8 flex flex-col items-center justify-between h-96">
+            <h2 class="text-3xl font-bold mt-4 text-center">{{ question.title }}</h2>
             <div v-if="question.answerType === 'text'" class="relative z-0 w-1/2 mb-6 group">
                 <input
                     v-model="answer"
@@ -16,7 +15,8 @@
                 </label>
             </div>
 
-            <div v-else-if="question.answerType === 'multipleChoice'" class="flex justify-evenly font-bold">
+            <div v-else-if="question.answerType === 'multipleChoice'"
+                 :class="`grid gap-10 justify-items-center font-bold grid-cols-${question.options.length}`">
                 <button
                     class="py-2.5 px-4 w-48 h-36 text-center text-lg text-white bg-transparent border-2 rounded-md border-white appearance-none focus:outline-none focus:ring-0 focus:border-2 transition duration-200 bg-cover button-with-bg hover:scale-105"
                     :class="{ 'selected': isSelected(option) }"
@@ -28,8 +28,10 @@
                 </button>
             </div>
 
-            <div class="self-end">
-                <button @click="submitAnswer">Next</button>
+            <div class="flex w-full justify-between items-center">
+                <button @click="$emit('back')">Back</button>
+                <button v-if="selectedOptions.length === 0" @click="submitAnswer">Skip</button>
+                <button v-else @click="submitAnswer">Next</button>
             </div>
         </div>
     </div>
@@ -71,6 +73,18 @@
     border: #65ece2 2px solid;
     color: #65ece2;
 }
+
+.grid-cols-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+}
+
+.grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+.grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
 </style>
 
 <script setup>
@@ -98,7 +112,7 @@ const selectOption = (option) => {
     }
 };
 
-const emit = defineEmits(['answer']);
+const emit = defineEmits(['answer', 'back']);
 const submitAnswer = () => {
     if (props.question.answerType === 'text') {
         emit('answer', {question: props.question.id, answer: answer.value});

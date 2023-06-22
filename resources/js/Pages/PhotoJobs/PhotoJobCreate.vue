@@ -1,11 +1,24 @@
 <template>
     <AnimatedBackgroundLayout>
-            <div class="py-12 w-full">
+        <ProgressDots
+            :current-question="currentQuestionIndex"
+            :questions="questions"
+            @change-question="currentQuestionIndex = $event"
+        />
+
+<!--        <div class="text-white text-center mt-10">-->
+<!--            <h2 class="text-xl font-bold">Guidelines</h2>-->
+<!--            <p>You can select multiple answers on the multiple choice questions</p>-->
+<!--            <p>You can skip any question by clicking the next button without providing an answer</p>-->
+<!--        </div>-->
+
+        <div class="py-12 w-full">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <FormQuestion
                         v-if="currentQuestion"
                         :question="currentQuestion"
                         @answer="handleAnswer"
+                        @back="previousQuestion"
                     />
                 </div>
             </div>
@@ -17,6 +30,7 @@ import {ref, computed} from 'vue';
 import FormQuestion from "../../Components/Forms/FormQuestion.vue";
 import AnimatedBackgroundLayout from "../../Layouts/AnimatedBackgroundLayout.vue";
 import {useForm} from "@inertiajs/vue3";
+import ProgressDots from "../../Components/Forms/ProgressDots.vue";
 
 const questions = [
     {
@@ -40,14 +54,13 @@ const questions = [
             {
                 id: '1',
                 title: 'Portrait',
-                background: '/img/portrait-happy-man-showing-blank-signboard-isolated-white-background.jpg'
+                background: '/img/button-backgrounds/img-orientation/portrait-orientation-bg-1.jpg'
             },
             {
                 id: '2',
                 title: 'Landscape',
-                background: '/img/sad-guy-holding-black-frame.jpg'
+                background: '/img/button-backgrounds/img-orientation/landscape-orientation-bg-1.jpg'
             },
-            // { id: '3', title: 'Both' }
         ]
     },
     {
@@ -62,9 +75,17 @@ const questions = [
         example: '',
         answerType: 'multipleChoice',
         options: [
-            {id: '1', title: 'Minimalist'},
-            {id: '2', title: 'Detailed'},
-            {id: '3', title: 'Both'}
+            {
+                id: '1',
+                title: 'Minimalist',
+                background: '/img/button-backgrounds/minimalist/minimalist-1.jpg'
+
+            },
+            {
+                id: '2',
+                title: 'Detailed',
+                background: '/img/button-backgrounds/detailed/detailed-4.jpg'
+            },
         ]
     },
     {
@@ -73,9 +94,16 @@ const questions = [
         example: '',
         answerType: 'multipleChoice',
         options: [
-            {id: '1', title: 'Modern'},
-            {id: '2', title: 'Vintage'},
-            {id: '3', title: 'Both'}
+            {
+                id: '1',
+                title: 'Modern',
+                background: '/img/button-backgrounds/modern/modern-1.jpg'
+            },
+            {
+                id: '2',
+                title: 'Vintage',
+                background: '/img/button-backgrounds/vintage/vintage-1.jpg'
+            },
         ]
     },
     {
@@ -98,7 +126,6 @@ const {data, post, reset} = useForm({
     q7: '',
 })
 
-// let formAnswers = reactive({});
 
 const currentQuestion = computed(() => questions[currentQuestionIndex.value]);
 
@@ -111,6 +138,11 @@ const nextQuestion = () => {
     currentQuestionIndex.value++;
     if (currentQuestionIndex.value >= questions.length) {
         submitForm();
+    }
+};
+const previousQuestion = () => {
+    if (currentQuestionIndex.value > 0) {
+        currentQuestionIndex.value--;
     }
 };
 
