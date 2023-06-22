@@ -14,9 +14,13 @@ return new class extends Migration
         Schema::create('photo_jobs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->string('photo_type');
-            $table->string('photo_contents');
-            $table->enum('photo_format', ['portrait', 'landscape', 'both'])->default('both');
+            $table->string('subject');
+            $table->string('mood');
+            $table->enum('orientation', ['portrait', 'landscape', 'both'])->default('both');
+            $table->string('elements');
+            $table->enum('style', ['minimalist', 'detailed', 'both'])->default('both');
+            $table->enum('setting', ['vintage', 'modern', 'both'])->default('both');
+            $table->string('purpose');
             $table->timestamps();
 
             $table->foreign('user_id')

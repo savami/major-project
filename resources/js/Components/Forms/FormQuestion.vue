@@ -30,7 +30,7 @@
 
             <div class="flex w-full justify-between items-center">
                 <button @click="$emit('back')">Back</button>
-                <button v-if="selectedOptions.length === 0" @click="submitAnswer">Skip</button>
+                <button v-if="selectedOptions.length === 0 && question.answerType === 'multipleChoice'" @click="submitAnswer">Skip</button>
                 <button v-else @click="submitAnswer">Next</button>
             </div>
         </div>

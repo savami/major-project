@@ -40,6 +40,8 @@ Route::middleware([
     Route::post('/text-jobs', [TextJobController::class, 'store'])->name('textJobs.store');
 
     // Photo jobs routes
+    Route::get('/photo-jobs/{username}/{id}', [PhotoJobController::class, 'show']);
     Route::get('/photo-jobs/create', [PhotoJobController::class, 'create'])->name('photoJobs.create');
     Route::post('/photo-jobs', [PhotoJobController::class, 'store'])->name('photoJobs.store');
+
 });

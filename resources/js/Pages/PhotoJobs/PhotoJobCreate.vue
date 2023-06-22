@@ -116,23 +116,18 @@ const questions = [
 
 let currentQuestionIndex = ref(0);
 
-const {data, post, reset} = useForm({
-    q1: '',
-    q2: '',
-    q3: '',
-    q4: '',
-    q5: '',
-    q6: '',
-    q7: '',
-})
+const form = useForm({
+    subject: '',
+    mood: '',
+    orientation: '',
+    elements: '',
+    style: '',
+    setting: '',
+    purpose: '',
+});
 
 
 const currentQuestion = computed(() => questions[currentQuestionIndex.value]);
-
-const handleAnswer = ({question, answer}) => {
-    data[`q${question}`] = answer;
-    nextQuestion();
-};
 
 const nextQuestion = () => {
     currentQuestionIndex.value++;
@@ -146,9 +141,13 @@ const previousQuestion = () => {
     }
 };
 
-const submitForm = () => {
-    post('/photo-jobs').then(() => {
-        reset('q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7');
-    });
+const handleAnswer = ({question, answer}) => {
+    form.data[`q${question}`] = answer;
+    nextQuestion();
+};
+
+const submitForm = async () => {
+    await form.post('/photo-jobs');
+    form.reset();
 };
 </script>
