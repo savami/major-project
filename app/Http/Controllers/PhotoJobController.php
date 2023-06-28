@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\PhotoJob;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Services\PexelsService;
 
 class PhotoJobController extends Controller
 {
