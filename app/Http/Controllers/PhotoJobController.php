@@ -16,6 +16,8 @@ class PhotoJobController extends Controller
 
     public function store(Request $request)
     {
+        dd($request);
+
         $validateData = $request->validate([
             'subject' => 'required|string',
             'mood' => 'required|string',

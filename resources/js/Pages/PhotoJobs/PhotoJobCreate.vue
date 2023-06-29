@@ -114,6 +114,16 @@ const questions = [
     },
 ];
 
+const questionIdToFormKey = {
+    '1': 'subject',
+    '2': 'mood',
+    '3': 'orientation',
+    '4': 'elements',
+    '5': 'style',
+    '6': 'setting',
+    '7': 'purpose',
+};
+
 let currentQuestionIndex = ref(0);
 
 const form = useForm({
@@ -129,6 +139,8 @@ const form = useForm({
 
 const currentQuestion = computed(() => questions[currentQuestionIndex.value]);
 
+let answers = ref([]);
+
 const nextQuestion = () => {
     currentQuestionIndex.value++;
     if (currentQuestionIndex.value >= questions.length) {
@@ -141,8 +153,15 @@ const previousQuestion = () => {
     }
 };
 
-const handleAnswer = ({question, answer}) => {
-    form.data[`q${question}`] = answer;
+// const handleAnswer = ({question, answer}) => {
+//     const formKey = questionIdToFormKey[question.id];
+//     form[formKey] = answer;
+//     nextQuestion();
+// };
+
+const handleAnswer = (payload) => {
+    const formKey = questionIdToFormKey[payload.question];
+    form[formKey] = payload.answer;
     nextQuestion();
 };
 

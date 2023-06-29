@@ -88,7 +88,7 @@
 </style>
 
 <script setup>
-import {ref} from 'vue';
+import {ref, watchEffect} from 'vue';
 
 const props = defineProps({
     question: Object,
@@ -97,10 +97,21 @@ const props = defineProps({
 const answer = ref('');
 const selectedOptions = ref([]);
 
+// Resetting field after proceeding to next question
+watchEffect(() => {
+    if (props.question.answerType === 'text') {
+        answer.value = '';
+    } else if (props.question.answerType === 'multipleChoice') {
+        selectedOptions.value = [];
+    }
+});
+
+// Check if an option is selected
 const isSelected = (option) => {
     return selectedOptions.value.some(o => o.id === option.id);
 };
 
+// Select an option
 const selectOption = (option) => {
     const index = selectedOptions.value.findIndex(o => o.id === option.id);
     if (index !== -1) {
@@ -112,12 +123,15 @@ const selectOption = (option) => {
     }
 };
 
+// Emitting the answer or going back to previous question to the parent component
 const emit = defineEmits(['answer', 'back']);
 const submitAnswer = () => {
     if (props.question.answerType === 'text') {
         emit('answer', {question: props.question.id, answer: answer.value});
+        console.log(props.question.id, answer.value);
     } else if (props.question.answerType === 'multipleChoice') {
         emit('answer', {question: props.question.id, answer: selectedOptions.value.map(option => option.title)});
+        console.log(props.question.id, selectedOptions.value.map(option => option.title));
     }
 };
 </script>

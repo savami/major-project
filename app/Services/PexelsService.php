@@ -20,7 +20,7 @@ class PexelsService
     public function searchPhotos($query, $per_page = 15, $page = 1)
     {
         if (env('ENABLED_GPT_3_ENHANCEMENT')) {
-           $prompt = "Search for photos of " . $query . " on Pexels.\n\n";
+           $prompt = "Test prompt";
            $result = OpenAI::completions()->create([
               'model' => 'text-davinci-003',
                 'prompt' => $prompt,
