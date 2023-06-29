@@ -21,6 +21,7 @@ return new class extends Migration
             $table->enum('style', ['minimalist', 'detailed', 'both'])->default('both');
             $table->enum('setting', ['vintage', 'modern', 'both'])->default('both');
             $table->string('purpose');
+            $table->json('pexels_response')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')
