@@ -79,7 +79,6 @@ const questions = [
                 id: '1',
                 title: 'Minimalist',
                 background: '/img/button-backgrounds/minimalist/minimalist-1.jpg'
-
             },
             {
                 id: '2',
@@ -152,12 +151,6 @@ const previousQuestion = () => {
         currentQuestionIndex.value--;
     }
 };
-
-// const handleAnswer = ({question, answer}) => {
-//     const formKey = questionIdToFormKey[question.id];
-//     form[formKey] = answer;
-//     nextQuestion();
-// };
 
 const handleAnswer = (payload) => {
     const formKey = questionIdToFormKey[payload.question];
