@@ -13,5 +13,5 @@ return [
     */
 
     'api_key' => env('OPENAI_API_KEY'),
-    'organization' => env('Personal'),
+    'organization' => env('OPENAI_API_ORGANIZATION'),
 ];

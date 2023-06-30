@@ -20,12 +20,7 @@ class PexelsService
     public function searchPhotos($query, $per_page = 15, $page = 1)
     {
         if (env('ENABLED_GPT_3_ENHANCEMENT')) {
-           $prompt = "Test prompt";
-           $result = OpenAI::completions()->create([
-              'model' => 'text-davinci-003',
-                'prompt' => $prompt,
-           ]);
-           $query = $result['choices'][0]['text'];
+           $query = $this->generateQuery($query);
         }
 
         $response = Http::withHeaders([
@@ -47,5 +42,28 @@ class PexelsService
         } else {
             throw new Exception('Something went wrong');
         }
+    }
+
+    private function generateQuery($query)
+    {
+        // The "engine" parameter is set to "davinci" in this example, but you can use "curie", "babbage", or "ada"
+        // depending on the capability and cost you want. You can find more information about the engines
+        // at https://beta.openai.com/docs/engines.
+        $prompts = [
+            'Translate this photo search query to a more descriptive query: "' . $query . '"',
+            'Enhance this photo search query with more detail: "' . $query . '"',
+            'Expand this photo search query with more specific terms: "' . $query . '"'
+        ];
+        $prompt = $prompts[array_rand($prompts)];
+
+        // Make the API call
+        $result = OpenAI::completions()->create([
+            'model' => 'text-davinci-003',
+            'prompt' => $prompt,
+            'max_tokens' => 60
+        ]);
+
+        // Retrieve the generated text from the API response
+        return $result['choices'][0]['text'];
     }
 }

@@ -39,8 +39,11 @@ class PhotoJobController extends Controller
             'purpose' => 'required|string',
         ])->validate();
 
+        $pexelsResponse = (new PexelsService())->searchPhotos($validateData['subject']);
+
         $photoJob = new PhotoJob($validateData);
         $photoJob->user_id = auth()->user()->id;
+        $photoJob->pexels_response = $pexelsResponse;
         $photoJob->save();
 
         return redirect('/photo-jobs/' . auth()->user()->name . '/' . $photoJob->id);
