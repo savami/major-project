@@ -28,13 +28,6 @@ class PhotoJobController extends Controller
                 }
             }
         }
-//        foreach ($data as $questionId => $answer) {
-//            if (is_array($answer)) {
-//                $data[$questionId] = implode(", ", $answer);
-//            }
-//        }
-
-//        dd($data);
 
         $validateData = Validator::make($data, [
             'subject' => 'required|string',
