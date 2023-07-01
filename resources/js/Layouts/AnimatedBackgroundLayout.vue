@@ -308,13 +308,12 @@ const logout = () => {
 /* Main class */
 .bg-lines {
     margin: 0;
-    height: 100vh;
     font-weight: 100;
     background: radial-gradient(#0d91af,#1f1013);
-    -webkit-overflow-Y: hidden;
-    -moz-overflow-Y: hidden;
-    -o-overflow-Y: hidden;
-    overflow-y: hidden;
+    //-webkit-overflow-Y: hidden;
+    //-moz-overflow-Y: hidden;
+    //-o-overflow-Y: hidden;
+    //overflow-y: hidden;
     -webkit-animation: fadeIn 1 1s ease-out;
     -moz-animation: fadeIn 1 1s ease-out;
     -o-animation: fadeIn 1 1s ease-out;

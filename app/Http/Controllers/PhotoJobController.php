@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PhotoJob;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
@@ -48,19 +49,30 @@ class PhotoJobController extends Controller
         $photoJob->pexels_response = $pexelsResponse;
         $photoJob->save();
 
-        return redirect('/photo-jobs/' . auth()->user()->name . '/' . $photoJob->id);
+//        return redirect('/photo-jobs/' . auth()->user()->id . '/' . $photoJob->id);
+        return redirect()->route('photoJobs.show', ['userId' => auth()->user()->id, 'photoJobId' => $photoJob->id]);
+
     }
 
-    public function show($username, $id)
+    public function show($userId, $photoJobId)
     {
         // Retrieve the PhotoJob by its id and return it to the view
-        $photoJob = PhotoJob::findOrFail($id);
+        $photoJob = PhotoJob::where('user_id', $userId)
+            ->where('id', $photoJobId)
+            ->first();
 
         // You could also check if the username matches the username of the user who created the PhotoJob
-        if ($photoJob->user->username !== $username) {
+        if (auth()->user()->id !== (int)$userId) {
             abort(404);
         }
 
-        return Inertia::render('PhotoJobs/PhotoJobShow', ['photoJob' => $photoJob]);
+        $pexelsResponse = $photoJob->pexels_response;
+
+
+//        dd($userId, $photoJobId, $photoJob);
+
+        return Inertia::render('PhotoJobs/PhotoJobShow', [
+            'pexelsResponse' => $pexelsResponse,
+        ]);
     }
 }
