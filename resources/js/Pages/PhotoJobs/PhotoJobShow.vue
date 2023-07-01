@@ -14,8 +14,8 @@
              <a :href="photo.url" target="_blank">
                  <img :src="photo.src.medium" :alt="photo.alt" class="image" />
                  <div class="overlay">
-                     <p class="photographer-name">{{ photo.photographer }}</p>
-                     <p class="view-on-pexels">View on Pexels</p>
+                     <p class="photographer-name">Shot by: {{ photo.photographer }}</p>
+                     <p class="view-on-pexels">Click to view on Pexels</p>
                  </div>
              </a>
          </div>
@@ -25,6 +25,7 @@
 
 <style scoped>
 .container {
+    padding: 3rem;
     column-count: 3;
     column-gap: 2em;
     margin: 0 auto;
@@ -66,7 +67,7 @@
     transition: opacity 0.3s ease-in-out;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
 }
 
