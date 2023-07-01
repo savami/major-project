@@ -1,14 +1,6 @@
 <template>
  <AnimatedBackgroundLayout>
     <h1 class="text-center my-8 text-3xl text-white font-bold">Results</h1>
-
-
-<!--        <div v-for="photo in pexelsResponse.photos" :key="photo.id" class="p-4">-->
-<!--            <img :src="photo.src.medium" :alt="photo.alt" class="w-full h-auto" />-->
-<!--            <h2 class="text-center mt-2">{{ photo.photographer }}</h2>-->
-<!--            <p class="text-center"><a :href="photo.url" target="_blank">View on Pexels</a></p>-->
-<!--        </div>-->
-
      <div class="container">
          <div class="image-container" v-for="photo in pexelsResponse.photos" :key="photo.id">
              <a :href="photo.url" target="_blank">
