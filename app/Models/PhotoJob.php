@@ -10,6 +10,9 @@ class PhotoJob extends Model
     use HasFactory;
 
     protected $guarded = [];
+    protected $casts = [
+        'pexels_response' => 'json',
+    ];
 
     public function user()
     {

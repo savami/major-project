@@ -28,6 +28,13 @@ class PhotoJobController extends Controller
                 }
             }
         }
+//        foreach ($data as $questionId => $answer) {
+//            if (is_array($answer)) {
+//                $data[$questionId] = implode(", ", $answer);
+//            }
+//        }
+
+//        dd($data);
 
         $validateData = Validator::make($data, [
             'subject' => 'required|string',
@@ -40,6 +47,8 @@ class PhotoJobController extends Controller
         ])->validate();
 
         $pexelsResponse = (new PexelsService())->searchPhotos($validateData['subject']);
+
+//        dd($pexelsResponse);
 
         $photoJob = new PhotoJob($validateData);
         $photoJob->user_id = auth()->user()->id;

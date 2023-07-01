@@ -5,6 +5,7 @@
             <h2 class="text-3xl font-bold mt-4 text-center">{{ question.title }}</h2>
             <div v-if="question.answerType === 'text'" class="relative z-0 w-1/2 mb-6 group">
                 <input
+                    @keyup.enter="submitAnswer"
                     v-model="answer"
                     type="text"
                     placeholder=" "
