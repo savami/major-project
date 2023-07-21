@@ -26,6 +26,7 @@ class PhotoJobController extends Controller
                     $data[$questionId] = $answer[0];
                 } elseif (count($answer) > 1) {
                     $data[$questionId] = "both";
+                    // TODO: Remove multiple selections and add skip option to nullable questions
                 }
             }
         }
@@ -33,14 +34,33 @@ class PhotoJobController extends Controller
         $validateData = Validator::make($data, [
             'subject' => 'required|string',
             'mood' => 'required|string',
-            'orientation' => 'required',
+            'orientation' => 'nullable|string',
             'elements' => 'required|string',
-            'style' => 'required',
+            'style' => 'nullable|string',
             'setting' => 'required',
-            'purpose' => 'required|string',
+            'size' => 'nullable|string',
+            'color' => 'nullable|string',
         ])->validate();
 
-        $pexelsResponse = (new PexelsService())->searchPhotos($validateData['subject']);
+        dd($validateData);
+
+        $pexelsService = new PexelsService();
+
+
+        if (config('openai.enable_gpt3_enhancement')) {
+            $searchQuery = $pexelsService->generateQuery([
+                'subject' => $validateData['subject'],
+                'mood' => $validateData['mood'],
+                'elements' => $validateData['elements'],
+                'style' => $validateData['style'],
+                'setting' => $validateData['setting'],
+            ]);
+        } else {
+            $searchQuery = $validateData['subject'];
+        }
+
+        $pexelsResponse = $pexelsService->searchPhotos($searchQuery, 15, 1, $validateData['orientation'], $validateData['size'], $validateData['color']);
+//        $pexelsResponse = $pexelsService->searchPhotos($searchQuery);
 
 //        dd($pexelsResponse);
 

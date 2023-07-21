@@ -48,7 +48,7 @@ const questions = [
     {
         id: '3',
         title: 'Should the photos be in portrait or landscape orientation?',
-        example: '',
+        example: 'Select one or skip if you don\'t care',
         answerType: 'multipleChoice',
         options: [
             {
@@ -107,10 +107,30 @@ const questions = [
     },
     {
         id: '7',
-        title: 'What is the purpose of the photo?',
-        example: 'Example: Professional style for businesses, while more creative for personal',
-        answerType: 'text'
+        title: 'What should the size of the photo be?',
+        example: 'Small (4MP), Medium (12MP), Large (24MP)',
+        answerType: 'multipleChoice',
+        options: [
+            {
+                id: '1',
+                title: 'Small',
+            },
+            {
+                id: '2',
+                title: 'Medium',
+            },
+            {
+                id: '3',
+                title: 'Large',
+            },
+        ]
     },
+    {
+        id: '8',
+        title: 'Which colors should be used in the photo?',
+        example: 'Enter hex code or color name (e.g. #ffffff or white), or leave blank for any color',
+        answerType: 'text',
+    }
 ];
 
 const questionIdToFormKey = {
@@ -120,7 +140,8 @@ const questionIdToFormKey = {
     '4': 'elements',
     '5': 'style',
     '6': 'setting',
-    '7': 'purpose',
+    '7': 'size',
+    '8': 'color',
 };
 
 let currentQuestionIndex = ref(0);
@@ -132,7 +153,8 @@ const form = useForm({
     elements: '',
     style: '',
     setting: '',
-    purpose: '',
+    size: '',
+    color: '',
 });
 
 

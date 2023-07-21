@@ -16,11 +16,12 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->string('subject');
             $table->string('mood');
-            $table->enum('orientation', ['portrait', 'landscape', 'both'])->default('both');
+            $table->string('orientation')->nullable()->default(null);
             $table->string('elements');
-            $table->enum('style', ['minimalist', 'detailed', 'both'])->default('both');
-            $table->enum('setting', ['vintage', 'modern', 'both'])->default('both');
-            $table->string('purpose');
+            $table->string('style')->nullable()->default(null);
+            $table->string('setting')->nullable()->default(null);
+            $table->string('size')->nullable()->default(null);
+            $table->string('color')->nullable()->default(null);
             $table->json('pexels_response')->nullable();
             $table->timestamps();
 
