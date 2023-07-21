@@ -4,28 +4,28 @@ namespace App\Services;
 
 use Exception;
 use Illuminate\Support\Facades\Http;
-use OpenAI\Laravel\Facades\OpenAI;
+use Illuminate\Support\Facades\Log;
 
 class PexelsService
 {
-    private $apiKey;
-    private $baseUrl;
+    private string $pexelsApiKey;
+    private string $pexelsBaseUrl;
 
     public function __construct()
     {
-        $this->apiKey = env('PEXELS_API_KEY');
-        $this->baseUrl = 'https://api.pexels.com/v1/';
+        $this->pexelsApiKey = config('pexels.api_key');
+        $this->pexelsBaseUrl = 'https://api.pexels.com/v1/';
     }
 
     public function searchPhotos($query, $per_page = 15, $page = 1)
     {
-        if (env('ENABLED_GPT_3_ENHANCEMENT')) {
+        if (config('openai.enable_gpt3_enhancement')) {
            $query = $this->generateQuery($query);
         }
 
         $response = Http::withHeaders([
-            'Authorization' => $this->apiKey,
-        ])->get($this->baseUrl . 'search', [
+            'Authorization' => $this->pexelsApiKey,
+        ])->get($this->pexelsBaseUrl . 'search', [
             'query' => $query,
             'per_page' => $per_page,
             'page' => $page,
@@ -34,7 +34,7 @@ class PexelsService
         if ($response->ok()) {
             return $response->json();
         } else if ($response->status() === 401) {
-            throw new Exception('Invalid API key');
+            throw new Exception('Invalid API key: ' . config('pexels.api_key'));
         } else if ($response->status() === 404) {
             throw new Exception('Not found');
         } else if ($response->status() === 429) {
@@ -56,14 +56,33 @@ class PexelsService
         ];
         $prompt = $prompts[array_rand($prompts)];
 
+        $openAiApiKey = config('openai.api_key');
+        $openAiEngine = config('openai.engine');
+
         // Make the API call
-        $result = OpenAI::completions()->create([
-            'model' => 'text-davinci-003',
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $openAiApiKey,
+            'Content-Type' => 'application/json',
+        ])->post('https://api.openai.com/v1/engines/' . $openAiEngine . '/completions', [
             'prompt' => $prompt,
-            'max_tokens' => 60
+            'max_tokens' => 64,
+            'temperature' => 0.7,
+            'top_p' => 1,
+            'n' => 1,
+            'stream' => false,
+            'logprobs' => null,
+            'stop' => ['\n'],
         ]);
 
+        if ($response->successful()) {
+            $result = $response->json();
+            return trim($result['choices'][0]['text']);
+        } else {
+            Log::error('OpenAI API request failed: ' . $response->body());
+            return $query; // return the original query if the API request fails
+        }
+
         // Retrieve the generated text from the API response
-        return $result['choices'][0]['text'];
+//        return $result['choices'][0]['text'];
     }
 }

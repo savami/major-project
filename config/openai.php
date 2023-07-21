@@ -14,4 +14,6 @@ return [
 
     'api_key' => env('OPENAI_API_KEY'),
     'organization' => env('OPENAI_API_ORGANIZATION'),
+    'engine' => env('OPENAI_DEFAULT_ENGINE'),
+    'enable_gpt3_enhancement' => env('ENABLE_GPT3_ENHANCEMENT', false),
 ];
