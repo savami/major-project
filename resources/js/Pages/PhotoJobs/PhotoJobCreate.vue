@@ -54,7 +54,7 @@ const questions = [
     {
         id: '3',
         title: 'Should the photos be in portrait or landscape orientation?',
-        example: 'Select one or skip if you don\'t care',
+        example: 'Select one or skip if you want all formats',
         answerType: 'multipleChoice',
         options: [
             {
@@ -67,6 +67,11 @@ const questions = [
                 title: 'Landscape',
                 background: '/img/button-backgrounds/img-orientation/landscape-orientation-bg-1.jpg'
             },
+            {
+                id: '3',
+                title: 'Square',
+                background: '/img/button-backgrounds/img-orientation/square-orientation-bg-1.jpg'
+            }
         ]
     },
     {
