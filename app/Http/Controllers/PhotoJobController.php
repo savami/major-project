@@ -77,7 +77,7 @@ class PhotoJobController extends Controller
             $searchQuery = $validateData['subject'];
         }
 
-        $pexelsResponse = $pexelsService->searchPhotos($searchQuery, 15, 1, $validateData['orientation'], $validateData['size'], $validateData['color']);
+        $pexelsResponse = $pexelsService->searchPhotos($searchQuery, 80, 1, $validateData['orientation'], $validateData['size'], $validateData['color']);
 //        $pexelsResponse = $pexelsService->searchPhotos($searchQuery);
 
 //        dd($pexelsResponse);

@@ -18,7 +18,7 @@ class PexelsService
         $this->pexelsBaseUrl = 'https://api.pexels.com/v1/';
     }
 
-    public function searchPhotos($query, $per_page = 80, $page = 1, $orientation = null, $size = null, $color = null)
+    public function searchPhotos($query, $per_page, $page, $orientation = null, $size = null, $color = null)
     {
         $queryParams = [
             'query' => $query,
@@ -26,17 +26,20 @@ class PexelsService
             'page' => $page,
         ];
 
+
         if ($orientation) {
-            $queryParams['orientation'] = $orientation;
+            $queryParams['orientation'] = strtolower($orientation);
         };
 
         if ($size) {
-            $queryParams['size'] = $size;
+            $queryParams['size'] = strtolower($size);
         };
 
         if ($color) {
-            $queryParams['color'] = $color;
+            $queryParams['color'] = strtolower($color);
         };
+
+//        dd($queryParams);
 
         $response = Http::withHeaders([
             'Authorization' => $this->pexelsApiKey,
@@ -89,7 +92,7 @@ class PexelsService
 
 //        $prompt = "Generate a very short and simplified, but natural language search query seperated by commas that will be used to find photos on Pexels based on these preferences: " . $summary . ". " . "Do not include the words 'subject', 'mood', 'elements', 'style', or 'setting' in your query. " . "The query should be no more than 10 words long and should be in a STRING format with single quotes (''). " . "For example: 'Happy woman paris, louvre, detailed, vintage'";
 
-        $prompt = "Based on the following requirements: " . $query . "Please generate a concise search query in natural language to find photos on Pexels. The query should not include the words 'subject', 'mood', 'elements', 'style', or 'setting', and should be less than 10 words. For example you receive: 'The subject of the photo should be a happy woman. It should include a bicycle.', and from that you generate: 'happy woman bicycle' for the search query.";
+        $prompt = "Based on the following requirements: " . $query . "Please generate a concise search query in natural language to find photos on Pexels. The query should not include the words 'subject', 'mood', 'elements', 'style', or 'setting', and should be less than 10 words. For example you receive: 'The subject of the photo should be a happy woman. It should include a bicycle.', and from that you generate: 'happy woman bicycle' for the search query. Do NOT add quotation marks around your query.";
 
         $openAiApiKey = config('openai.api_key');
         $openAiEngine = config('openai.engine');
