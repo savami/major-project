@@ -36,13 +36,19 @@ const questions = [
     {
         id: '1',
         title: 'What is the subject of the photos?',
-        example: 'Example: A person, a landscape, a city, an object, etc.',
+        example: 'Example: Happy woman, sad man, a city, a plant, etc.',
         answerType: 'text'
     },
+    // {
+    //     id: '2',
+    //     title: 'What mood should the photos be?',
+    //     example: 'Example: Happy, sad, dark, bright, etc.',
+    //     answerType: 'text'
+    // },
     {
         id: '2',
-        title: 'What mood should the photos be?',
-        example: 'Example: Happy, sad, dark, bright, etc.',
+        title: 'Are there specific elements to be included in the photo?',
+        example: 'Example: Vintage style, guitar, landscape background, river, skyscrapers, etc.',
         answerType: 'text'
     },
     {
@@ -63,50 +69,44 @@ const questions = [
             },
         ]
     },
+    // {
+    //     id: '5',
+    //     title: 'Do you prefer a minimalist style with lots of empty space, or a more detailed photo with many elements?',
+    //     example: '',
+    //     answerType: 'multipleChoice',
+    //     options: [
+    //         {
+    //             id: '1',
+    //             title: 'Minimalist',
+    //             background: '/img/button-backgrounds/minimalist/minimalist-1.jpg'
+    //         },
+    //         {
+    //             id: '2',
+    //             title: 'Detailed',
+    //             background: '/img/button-backgrounds/detailed/detailed-4.jpg'
+    //         },
+    //     ]
+    // },
+    // {
+    //     id: '5',
+    //     title: 'Do you prefer a modern or vintage setting?',
+    //     example: '',
+    //     answerType: 'multipleChoice',
+    //     options: [
+    //         {
+    //             id: '1',
+    //             title: 'Modern',
+    //             background: '/img/button-backgrounds/modern/modern-1.jpg'
+    //         },
+    //         {
+    //             id: '2',
+    //             title: 'Vintage',
+    //             background: '/img/button-backgrounds/vintage/vintage-1.jpg'
+    //         },
+    //     ]
+    // },
     {
         id: '4',
-        title: 'Are there specific elements to be included in the photo?',
-        example: 'Example: Certain type of building, a specific color, etc.',
-        answerType: 'text'
-    },
-    {
-        id: '5',
-        title: 'Do you prefer a minimalist style with lots of empty space, or a more detailed photo with many elements?',
-        example: '',
-        answerType: 'multipleChoice',
-        options: [
-            {
-                id: '1',
-                title: 'Minimalist',
-                background: '/img/button-backgrounds/minimalist/minimalist-1.jpg'
-            },
-            {
-                id: '2',
-                title: 'Detailed',
-                background: '/img/button-backgrounds/detailed/detailed-4.jpg'
-            },
-        ]
-    },
-    {
-        id: '6',
-        title: 'Do you prefer a modern or vintage setting?',
-        example: '',
-        answerType: 'multipleChoice',
-        options: [
-            {
-                id: '1',
-                title: 'Modern',
-                background: '/img/button-backgrounds/modern/modern-1.jpg'
-            },
-            {
-                id: '2',
-                title: 'Vintage',
-                background: '/img/button-backgrounds/vintage/vintage-1.jpg'
-            },
-        ]
-    },
-    {
-        id: '7',
         title: 'What should the size of the photo be?',
         example: 'Small (4MP), Medium (12MP), Large (24MP)',
         answerType: 'multipleChoice',
@@ -126,7 +126,7 @@ const questions = [
         ]
     },
     {
-        id: '8',
+        id: '5',
         title: 'Which colors should be used in the photo?',
         example: 'Enter hex code or color name (e.g. #ffffff or white), or leave blank for any color',
         answerType: 'text',
@@ -135,24 +135,24 @@ const questions = [
 
 const questionIdToFormKey = {
     '1': 'subject',
-    '2': 'mood',
+    // '2': 'mood',
+    '2': 'elements',
     '3': 'orientation',
-    '4': 'elements',
-    '5': 'style',
-    '6': 'setting',
-    '7': 'size',
-    '8': 'color',
+    // '5': 'style',
+    // '5': 'setting',
+    '4': 'size',
+    '5': 'color',
 };
 
 let currentQuestionIndex = ref(0);
 
 const form = useForm({
     subject: '',
-    mood: '',
-    orientation: '',
+    // mood: '',
     elements: '',
-    style: '',
-    setting: '',
+    orientation: '',
+    // style: '',
+    // setting: '',
     size: '',
     color: '',
 });

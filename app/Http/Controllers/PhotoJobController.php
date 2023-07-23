@@ -20,29 +20,47 @@ class PhotoJobController extends Controller
     {
         $data = $request->all();
 
+        $defaultData = [
+            'subject' => '',
+//            'mood' => '',
+            'orientation' => '',
+            'elements' => '',
+//            'style' => '',
+//            'setting' => '',
+            'size' => '',
+            'color' => '',
+        ];
+
+        $data = array_merge($defaultData, $data);
+
         foreach ($data as $questionId => $answer) {
             if (is_array($answer)) {
                 if (count($answer) === 1) {
                     $data[$questionId] = $answer[0];
-                } elseif (count($answer) > 1) {
-                    $data[$questionId] = "both";
+                } elseif (count($answer) === 0) {
+                    $data[$questionId] = null;
                     // TODO: Remove multiple selections and add skip option to nullable questions
                 }
             }
         }
 
+        try {
+
         $validateData = Validator::make($data, [
             'subject' => 'required|string',
-            'mood' => 'required|string',
-            'orientation' => 'nullable|string',
+//            'mood' => 'required|string',
             'elements' => 'required|string',
-            'style' => 'nullable|string',
-            'setting' => 'required',
-            'size' => 'nullable|string',
-            'color' => 'nullable|string',
+            'orientation' => 'nullable',
+//            'style' => 'nullable',
+//            'setting' => 'required|string',
+            'size' => 'nullable',
+            'color' => 'nullable',
         ])->validate();
+        } catch (\Exception $e) {
+            dd($e);
+        }
 
-        dd($validateData);
+//        dd($validateData);
 
         $pexelsService = new PexelsService();
 
@@ -50,10 +68,10 @@ class PhotoJobController extends Controller
         if (config('openai.enable_gpt3_enhancement')) {
             $searchQuery = $pexelsService->generateQuery([
                 'subject' => $validateData['subject'],
-                'mood' => $validateData['mood'],
+//                'mood' => $validateData['mood'],
                 'elements' => $validateData['elements'],
-                'style' => $validateData['style'],
-                'setting' => $validateData['setting'],
+//                'style' => $validateData['style'],
+//                'setting' => $validateData['setting'],
             ]);
         } else {
             $searchQuery = $validateData['subject'];

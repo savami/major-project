@@ -18,7 +18,7 @@ class PexelsService
         $this->pexelsBaseUrl = 'https://api.pexels.com/v1/';
     }
 
-    public function searchPhotos($query, $per_page = 15, $page = 1, $orientation = '', $size = '', $color = '')
+    public function searchPhotos($query, $per_page = 80, $page = 1, $orientation = null, $size = null, $color = null)
     {
         $queryParams = [
             'query' => $query,
@@ -55,87 +55,41 @@ class PexelsService
         }
     }
 
-//    private function generateQuery($form)
-//    {
-//        // The "engine" parameter is set to "davinci" in this example, but you can use "curie", "babbage", or "ada"
-//        // depending on the capability and cost you want. You can find more information about the engines
-//        // at https://beta.openai.com/docs/engines.
-//        $prompts = [
-//            'Translate this photo search query to a more descriptive query: "' . $query . '"',
-//            'Enhance this photo search query with more detail: "' . $query . '"',
-//            'Expand this photo search query with more specific terms: "' . $query . '"'
-//        ];
-//        $prompt = $prompts[array_rand($prompts)];
-//
-//        $openAiApiKey = config('openai.api_key');
-//        $openAiEngine = config('openai.engine');
-//
-//        // Make the API call
-//        $response = Http::withHeaders([
-//            'Authorization' => 'Bearer ' . $openAiApiKey,
-//            'Content-Type' => 'application/json',
-//        ])->post('https://api.openai.com/v1/engines/' . $openAiEngine . '/completions', [
-//            'prompt' => $prompt,
-//            'max_tokens' => 64,
-//            'temperature' => 0.7,
-//            'top_p' => 1,
-//            'n' => 1,
-//            'stream' => false,
-//            'logprobs' => null,
-//            'stop' => ['\n'],
-//        ]);
-//
-//        if ($response->successful()) {
-//            $result = $response->json();
-//            $enhancedQuery = trim($result['choices'][0]['text']);
-//            Log::info('Original Query: ' . $query . ' | Enhanced Query: ' . $enhancedQuery);
-//
-//            return $enhancedQuery;
-//        } else {
-//            Log::error('OpenAI API request failed: ' . $response->body());
-//            return $query; // return the original query if the API request fails
-//        }
-//
-//        // Retrieve the generated text from the API response
-////        return $result['choices'][0]['text'];
-//    }
-
+    // generateQuery() is used to generate a more descriptive search query from the form data using OpenAI's GPT-3 API with the text-davinci-003 model.
+    // Configuration can be found in config/openai.php, which all points to the .env file.
     public function generateQuery(array $form)
     {
         // Construct the query from the form data
         $query = "";
 
+        //
         if (!empty($form['subject'])) {
             $query .= "The subject of the photo should be " . $form['subject'] . ". ";
         }
 
-        if (!empty($form['mood'])) {
-            $query .= "The mood should be " . $form['mood'] . ". ";
-        }
+//        if (!empty($form['mood'])) {
+//            $query .= "It should convey a " . $form['mood'] . " mood. ";
+//        }
 
         if (!empty($form['elements'])) {
-            $query .= "The photo should include " . $form['elements'] . ". ";
+            $query .= "It should include " . $form['elements'] . ". ";
         }
 
-        if (!empty($form['style'])) {
-            $query .= "The style of the photo should be " . $form['style'] . ". ";
-        }
+//        if (!empty($form['style'])) {
+//            $query .= "It should be taken in a  " . $form['style'] . " style. ";
+//        }
 
-        if (!empty($form['setting'])) {
-            $query .= "The photo should have a " . $form['setting'] . " setting. ";
-        }
+//        if (!empty($form['setting'])) {
+//            $query .= "The setting should be " . $form['setting'] . " setting. ";
+//        }
 
-        // Generate the prompt for the GPT-3 API
-//        $prompts = [
-//            'Translate this photo search query to a more descriptive query: "' . $query . '"',
-//            'Enhance this photo search query with more detail: "' . $query . '"',
-//            'Expand this photo search query with more specific terms: "' . $query . '"'
-//        ];
-//        $prompt = $prompts[array_rand($prompts)];
+//        $summary = "A photo of a {$form['subject']} in a {$form['mood']} mood, with details of {$form['elements']}, in a {$form['style']} style in a {$form['setting']} setting.";
 
-        $summary = "A photo of a {$form['subject']} in a {$form['mood']} mood, with details of {$form['elements']}, in a {$form['style']} style in a {$form['setting']} setting.";
+        $summary = "A photo of a {$form['subject']}, with details of {$form['elements']}";
 
-        $prompt = "Generate a very short and simplified search query that will be used to find photos on Pexels based on these preferences: " . $summary;
+//        $prompt = "Generate a very short and simplified, but natural language search query seperated by commas that will be used to find photos on Pexels based on these preferences: " . $summary . ". " . "Do not include the words 'subject', 'mood', 'elements', 'style', or 'setting' in your query. " . "The query should be no more than 10 words long and should be in a STRING format with single quotes (''). " . "For example: 'Happy woman paris, louvre, detailed, vintage'";
+
+        $prompt = "Based on the following requirements: " . $query . "Please generate a concise search query in natural language to find photos on Pexels. The query should not include the words 'subject', 'mood', 'elements', 'style', or 'setting', and should be less than 10 words. For example you receive: 'The subject of the photo should be a happy woman. It should include a bicycle.', and from that you generate: 'happy woman bicycle' for the search query.";
 
         $openAiApiKey = config('openai.api_key');
         $openAiEngine = config('openai.engine');
@@ -158,7 +112,7 @@ class PexelsService
         if ($response->successful()) {
             $result = $response->json();
             $enhancedQuery = trim($result['choices'][0]['text']);
-            Log::info('Original Query: ' . $query . ' | Enhanced Query: ' . $enhancedQuery);
+            Log::info('Original Query: ' . $query . ' | Summary: ' . $summary . ' | Enhanced Query: ' . $enhancedQuery);
 
             return $enhancedQuery;
         } else {
