@@ -18,7 +18,7 @@ return new class extends Migration
 //            $table->string('mood');
             $table->string('orientation')->nullable()->default(null);
             $table->string('elements');
-//            $table->string('style')->nullable()->default(null);
+            $table->string('style')->nullable()->default(null);
 //            $table->string('setting')->nullable()->default(null);
             $table->string('size')->nullable()->default(null);
             $table->string('color')->nullable()->default(null);

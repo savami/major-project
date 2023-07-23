@@ -25,7 +25,7 @@ class PhotoJobController extends Controller
 //            'mood' => '',
             'orientation' => '',
             'elements' => '',
-//            'style' => '',
+            'style' => '',
 //            'setting' => '',
             'size' => '',
             'color' => '',
@@ -46,16 +46,16 @@ class PhotoJobController extends Controller
 
         try {
 
-        $validateData = Validator::make($data, [
-            'subject' => 'required|string',
+            $validateData = Validator::make($data, [
+                'subject' => 'required|string',
 //            'mood' => 'required|string',
-            'elements' => 'required|string',
-            'orientation' => 'nullable',
-//            'style' => 'nullable',
+                'elements' => 'required|string',
+                'orientation' => 'nullable',
+                'style' => 'nullable',
 //            'setting' => 'required|string',
-            'size' => 'nullable',
-            'color' => 'nullable',
-        ])->validate();
+                'size' => 'nullable',
+                'color' => 'nullable',
+            ])->validate();
         } catch (\Exception $e) {
             dd($e);
         }
@@ -70,7 +70,7 @@ class PhotoJobController extends Controller
                 'subject' => $validateData['subject'],
 //                'mood' => $validateData['mood'],
                 'elements' => $validateData['elements'],
-//                'style' => $validateData['style'],
+                'style' => $validateData['style'],
 //                'setting' => $validateData['setting'],
             ]);
         } else {

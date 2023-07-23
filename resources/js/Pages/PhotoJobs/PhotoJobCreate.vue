@@ -48,7 +48,7 @@ const questions = [
     {
         id: '2',
         title: 'Are there specific elements to be included in the photo?',
-        example: 'Example: Vintage style, guitar, landscape background, river, skyscrapers, etc.',
+        example: 'Example: Vintage, birds, landscape background, river, skyscrapers, etc.',
         answerType: 'text'
     },
     {
@@ -69,24 +69,24 @@ const questions = [
             },
         ]
     },
-    // {
-    //     id: '5',
-    //     title: 'Do you prefer a minimalist style with lots of empty space, or a more detailed photo with many elements?',
-    //     example: '',
-    //     answerType: 'multipleChoice',
-    //     options: [
-    //         {
-    //             id: '1',
-    //             title: 'Minimalist',
-    //             background: '/img/button-backgrounds/minimalist/minimalist-1.jpg'
-    //         },
-    //         {
-    //             id: '2',
-    //             title: 'Detailed',
-    //             background: '/img/button-backgrounds/detailed/detailed-4.jpg'
-    //         },
-    //     ]
-    // },
+    {
+        id: '4',
+        title: 'Do you prefer a regular or monochrome style photo?',
+        example: '',
+        answerType: 'multipleChoice',
+        options: [
+            {
+                id: '1',
+                title: 'Regular',
+                background: '/img/button-backgrounds/regular/regular-bg-1.jpg'
+            },
+            {
+                id: '2',
+                title: 'Monochrome',
+                background: '/img/button-backgrounds/monochrome/monochrome-bg-1.jpg'
+            },
+        ]
+    },
     // {
     //     id: '5',
     //     title: 'Do you prefer a modern or vintage setting?',
@@ -106,7 +106,7 @@ const questions = [
     //     ]
     // },
     {
-        id: '4',
+        id: '5',
         title: 'What should the size of the photo be?',
         example: 'Small (4MP), Medium (12MP), Large (24MP)',
         answerType: 'multipleChoice',
@@ -126,7 +126,7 @@ const questions = [
         ]
     },
     {
-        id: '5',
+        id: '6',
         title: 'Which colors should be used in the photo?',
         example: 'Enter hex code or color name (e.g. #ffffff or white), or leave blank for any color',
         answerType: 'text',
@@ -138,10 +138,10 @@ const questionIdToFormKey = {
     // '2': 'mood',
     '2': 'elements',
     '3': 'orientation',
-    // '5': 'style',
+    '4': 'style',
     // '5': 'setting',
-    '4': 'size',
-    '5': 'color',
+    '5': 'size',
+    '6': 'color',
 };
 
 let currentQuestionIndex = ref(0);
@@ -151,7 +151,7 @@ const form = useForm({
     // mood: '',
     elements: '',
     orientation: '',
-    // style: '',
+    style: '',
     // setting: '',
     size: '',
     color: '',

@@ -78,9 +78,13 @@ class PexelsService
             $query .= "It should include " . $form['elements'] . ". ";
         }
 
-//        if (!empty($form['style'])) {
-//            $query .= "It should be taken in a  " . $form['style'] . " style. ";
-//        }
+        if (!empty($form['style'])) {
+            if ($form['style'] === "Monochrome") {
+                $query .= "It should be taken in a  " . $form['style'] . " style. ";
+            } else {
+                $query .= "";
+            }
+        }
 
 //        if (!empty($form['setting'])) {
 //            $query .= "The setting should be " . $form['setting'] . " setting. ";
@@ -88,7 +92,7 @@ class PexelsService
 
 //        $summary = "A photo of a {$form['subject']} in a {$form['mood']} mood, with details of {$form['elements']}, in a {$form['style']} style in a {$form['setting']} setting.";
 
-        $summary = "A photo of a {$form['subject']}, with details of {$form['elements']}";
+        $summary = "A photo of a {$form['subject']}, with details of {$form['elements']}, taken in a {$form['style']} style.";
 
 //        $prompt = "Generate a very short and simplified, but natural language search query seperated by commas that will be used to find photos on Pexels based on these preferences: " . $summary . ". " . "Do not include the words 'subject', 'mood', 'elements', 'style', or 'setting' in your query. " . "The query should be no more than 10 words long and should be in a STRING format with single quotes (''). " . "For example: 'Happy woman paris, louvre, detailed, vintage'";
 
