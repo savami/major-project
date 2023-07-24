@@ -53,6 +53,10 @@ const logout = () => {
                                 <NavLink class="text-white hover:text-white" :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
+
+                                <NavLink class="text-white hover:text-white" :href="route('photoJobs.index')" :active="route().current('photoJobs.index')">
+                                    My Photo Jobs
+                                </NavLink>
                             </div>
                         </div>
 
