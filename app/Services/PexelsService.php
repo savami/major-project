@@ -90,11 +90,7 @@ class PexelsService
 //            $query .= "The setting should be " . $form['setting'] . " setting. ";
 //        }
 
-//        $summary = "A photo of a {$form['subject']} in a {$form['mood']} mood, with details of {$form['elements']}, in a {$form['style']} style in a {$form['setting']} setting.";
-
         $summary = "A photo of a {$form['subject']}, with details of {$form['elements']}, taken in a {$form['style']} style.";
-
-//        $prompt = "Generate a very short and simplified, but natural language search query seperated by commas that will be used to find photos on Pexels based on these preferences: " . $summary . ". " . "Do not include the words 'subject', 'mood', 'elements', 'style', or 'setting' in your query. " . "The query should be no more than 10 words long and should be in a STRING format with single quotes (''). " . "For example: 'Happy woman paris, louvre, detailed, vintage'";
 
         $prompt = "Based on the following requirements: " . $query . "Please generate a concise search query in natural language to find photos on Pexels. The query should not include the words 'subject', 'mood', 'elements', 'style', or 'setting', and should be less than 10 words. For example you receive: 'The subject of the photo should be a happy woman. It should include a bicycle.', and from that you generate: 'happy woman bicycle' for the search query. Do NOT add quotation marks around your query.";
 
