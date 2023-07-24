@@ -115,6 +115,8 @@ class PexelsService
         if ($response->successful()) {
             $result = $response->json();
             $enhancedQuery = trim($result['choices'][0]['text']);
+
+            // Logging for ease-of-use while testing the prompts/queries/outputs
             Log::info('Original Query: ' . $query . ' | Summary: ' . $summary . ' | Enhanced Query: ' . $enhancedQuery);
 
             return $enhancedQuery;
