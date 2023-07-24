@@ -123,5 +123,4 @@ class PexelsService
             return $query; // return the original query if the API request fails
         }
     }
-
 }
