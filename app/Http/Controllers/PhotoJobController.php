@@ -11,6 +11,16 @@ use App\Services\PexelsService;
 
 class PhotoJobController extends Controller
 {
+    public function index()
+    {
+        $userId = auth()->user()->id;
+        $photoJobs = PhotoJob::where('user_id', $userId)->get();
+
+        return Inertia::render('PhotoJobs/PhotoJobs', [
+            'photoJobs' => $photoJobs,
+        ]);
+    }
+
     public function create()
     {
         return Inertia::render('PhotoJobs/PhotoJobCreate');
@@ -101,7 +111,7 @@ class PhotoJobController extends Controller
 
         // You could also check if the username matches the username of the user who created the PhotoJob
         if (auth()->user()->id !== (int)$userId) {
-            abort(404);
+            abort(403);
         }
 
         $pexelsResponse = $photoJob->pexels_response;

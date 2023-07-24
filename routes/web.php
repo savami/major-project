@@ -42,5 +42,6 @@ Route::middleware([
     // Photo jobs routes
     Route::get('/photo-jobs/create', [PhotoJobController::class, 'create'])->name('photoJobs.create');
     Route::get('/photo-jobs/{userId}/{photoJobId}', [PhotoJobController::class, 'show'])->name('photoJobs.show');
+    Route::get('/photo-jobs', [PhotoJobController::class, 'index'])->name('photoJobs.index');
     Route::post('/photo-jobs', [PhotoJobController::class, 'store'])->name('photoJobs.store');
 });
