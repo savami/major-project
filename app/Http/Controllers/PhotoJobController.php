@@ -14,7 +14,7 @@ class PhotoJobController extends Controller
     public function index()
     {
         $userId = auth()->user()->id;
-        $photoJobs = PhotoJob::where('user_id', $userId)->get();
+        $photoJobs = PhotoJob::where('user_id', $userId)->orderBy('created_at', 'desc')->get();
 
         return Inertia::render('PhotoJobs/PhotoJobs', [
             'photoJobs' => $photoJobs,
