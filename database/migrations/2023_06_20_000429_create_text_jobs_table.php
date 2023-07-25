@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('subject');
             $table->integer('word_amount');
             $table->enum('text_tone', ['Formal', 'Informal', 'Neutral'])->default('Neutral');
-            $table->enum('audience_intent', ['Informational', 'Commercial', 'Transactional'])->default('Informational');
+            $table->enum('audience_intent', ['Informational', 'Commercial', 'Transactional', 'Instructional', 'Entertainment'])->default('Informational');
             $table->string('primary_keyword');
             $table->json('secondary_keywords')->nullable();
             $table->json('frequently_asked_questions')->nullable();

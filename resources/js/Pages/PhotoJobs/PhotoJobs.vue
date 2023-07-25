@@ -2,7 +2,7 @@
     <AnimatedBackgroundLayout>
         <div class="mx-auto max-w-6xl sm:px-6 lg:px-8">
             <div class="px-4 sm:px-6 lg:px-8">
-                <div class="flex flex-col justify-center items-center sm:flex-row sm:items-center px-0.5">
+                <div v-if="photoJobs.length > 0" class="flex flex-col justify-center items-center sm:flex-row sm:items-center px-0.5">
                     <div class="sm:flex-auto mt-8 mb-6">
                         <h1 class="text-base font-semibold leading-6 text-white">Photo Jobs</h1>
                         <p class="mt-2 text-sm text-white">A list of all the photo jobs you have created in your
@@ -21,7 +21,7 @@
                 </div>
                 <div class="mt-8 flow-root bg-white rounded bg-opacity-20 backdrop-blur-lg drop-shadow-lg">
                     <div class="flex justify-center w-full">
-                        <div class="w-full py-4 align-middle sm:px-6 lg:px-8">
+                        <div v-if="photoJobs.length > 0" class="w-full py-4 align-middle sm:px-6 lg:px-8">
                             <table class="min-w-full divide-y divide-white divide-opacity-20 w-full">
                                 <thead>
                                 <tr>
@@ -70,6 +70,7 @@
                     </div>
                 </div>
             </div>
+            <EmptyState v-if="photoJobs.length === 0"/>
         </div>
     </AnimatedBackgroundLayout>
 </template>
@@ -84,6 +85,7 @@
 import AnimatedBackgroundLayout from "../../Layouts/AnimatedBackgroundLayout.vue";
 import {defineProps} from "vue";
 import { usePage , router } from "@inertiajs/vue3";
+import EmptyState from "../../Components/EmptyState.vue";
 
 const page = usePage();
 
