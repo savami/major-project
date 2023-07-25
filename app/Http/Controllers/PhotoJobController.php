@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PhotoJob;
 use App\Models\User;
+use App\Services\GptService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
@@ -73,10 +74,11 @@ class PhotoJobController extends Controller
 //        dd($validateData);
 
         $pexelsService = new PexelsService();
+        $gptService = new GptService();
 
 
         if (config('openai.enable_gpt3_enhancement')) {
-            $searchQuery = $pexelsService->generateQuery([
+            $searchQuery = $gptService->generatePhotoSearchQuery([
                 'subject' => $validateData['subject'],
 //                'mood' => $validateData['mood'],
                 'elements' => $validateData['elements'],
