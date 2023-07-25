@@ -14,12 +14,17 @@ return new class extends Migration
         Schema::create('text_jobs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->string('text_topic');
-            $table->string('text_keywords');
-            $table->integer('text_length');
-            $table->string('text_tone');
-            $table->string('text_cta'); // Call to action / desired goal
-            $table->string('text_language');
+            $table->string('name');
+            $table->string('subject');
+            $table->integer('word_amount');
+            $table->enum('text_tone', ['Formal', 'Informal', 'Neutral'])->default('Neutral');
+            $table->enum('audience_intent', ['Informational', 'Commercial', 'Transactional'])->default('Informational');
+            $table->string('primary_keyword');
+            $table->json('secondary_keywords')->nullable();
+            $table->json('frequently_asked_questions')->nullable();
+            $table->enum('call_to_action', ['buy_now', 'sign_up', 'learn_more']);
+            $table->string('text_language')->default('English');
+            $table->longText('generated_seo_text')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')
