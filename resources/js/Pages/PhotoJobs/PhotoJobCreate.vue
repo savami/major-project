@@ -165,7 +165,7 @@ const form = useForm({
 
 const currentQuestion = computed(() => questions[currentQuestionIndex.value]);
 
-let answers = ref([]);
+// let answers = ref([]);
 
 const nextQuestion = () => {
     currentQuestionIndex.value++;

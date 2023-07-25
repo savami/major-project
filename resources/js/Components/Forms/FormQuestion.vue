@@ -31,8 +31,12 @@
 
             <div class="flex w-full justify-between items-center">
                 <button @click="$emit('back')">Back</button>
+
                 <button v-if="selectedOptions.length === 0 && question.answerType === 'multipleChoice'" @click="submitAnswer">Skip</button>
-                <button v-else @click="submitAnswer">Next</button>
+                <button v-if="selectedOptions.length > 0 && question.answerType === 'multipleChoice'" @click="submitAnswer">Next</button>
+
+                <button v-if="answer === '' && question.answerType === 'text'" @click="submitAnswer">Skip</button>
+                <button v-if="answer && question.answerType === 'text'" @click="submitAnswer">Next</button>
             </div>
         </div>
     </div>
@@ -85,6 +89,18 @@
 
 .grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+
+.grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+}
+
+.grid-cols-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+}
+
+.grid-cols-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
 }
 </style>
 

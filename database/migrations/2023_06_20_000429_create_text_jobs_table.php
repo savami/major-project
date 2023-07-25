@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('primary_keyword');
             $table->json('secondary_keywords')->nullable();
             $table->json('frequently_asked_questions')->nullable();
-            $table->enum('call_to_action', ['buy_now', 'sign_up', 'learn_more']);
+            $table->enum('call_to_action', ['Buy now', 'Sign up', 'Contact us', 'Learn more', 'No call to action'])->default('No call to action');
             $table->string('text_language')->default('English');
             $table->longText('generated_seo_text')->nullable();
             $table->timestamps();
