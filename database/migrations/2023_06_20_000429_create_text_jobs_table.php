@@ -17,11 +17,11 @@ return new class extends Migration
             $table->string('name');
             $table->string('subject');
             $table->integer('word_amount');
-            $table->enum('text_tone', ['Formal', 'Informal', 'Neutral'])->default('Neutral');
+            $table->enum('text_tone', ['Professional', 'Casual', 'Straightforward', 'Friendly', 'Confident'])->default('Professional');
             $table->enum('audience_intent', ['Informational', 'Commercial', 'Transactional', 'Instructional', 'Entertainment'])->default('Informational');
             $table->string('primary_keyword');
-            $table->json('secondary_keywords')->nullable();
-            $table->json('frequently_asked_questions')->nullable();
+            $table->string('secondary_keywords')->nullable();
+//            $table->json('frequently_asked_questions')->nullable();
             $table->enum('call_to_action', ['Buy now', 'Sign up', 'Contact us', 'Learn more', 'No call to action'])->default('No call to action');
             $table->string('text_language')->default('English');
             $table->longText('generated_seo_text')->nullable();

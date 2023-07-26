@@ -1,11 +1,13 @@
 <template>
     <div class="flex flex-col justify-between h-full">
         <div
-            class="text-white bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg py-5 px-8 flex flex-col items-center justify-around quiz">
-            <h2 class="text-3xl font-bold mt-4 mb-2 text-center">{{ question.title }}</h2>
-            <p v-if="question.explanation" class="text-md text-center max-w-4xl h-12">{{ question.explanation }}</p>
-            <p v-if="!question.explanation" class="text-md text-center max-w-4xl h-12"></p>
-            <div v-if="question.answerType === 'text'" class="relative z-0 w-2/3 my-20 group">
+            class="text-white bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg py-10 px-8 flex flex-col items-center justify-between quiz">
+            <div class="mb-10">
+                <h2 class="text-3xl font-bold mb-2.5 text-center">{{ question.title }}</h2>
+                <p v-if="question.explanation" class="text-md text-center max-w-4xl md:h-6 lg:h-1">{{ question.explanation }}</p>
+                <p v-if="!question.explanation" class="text-md text-center max-w-4xl hidden"></p>
+            </div>
+            <div v-if="question.answerType === 'text'" class="relative z-0 w-2/3 group">
                 <input
                     @keyup.enter="submitAnswer"
                     v-model="answer"
@@ -31,7 +33,7 @@
                 </button>
             </div>
 
-            <div class="flex w-full justify-between items-center mb-4 px-2.5">
+            <div class="flex w-full justify-between items-center px-3">
                 <button @click="$emit('back')"
                         class="inline-flex items-center gap-x-1.5 rounded-md bg-amber-500 px-5 py-2.5 text-md font-semibold text-white shadow-sm hover:bg-amber-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 transition ease-in-out duration-75">
                     <ArrowLeftIcon class="h-5 w-5 inline-block mr-1 text-white"/>
@@ -79,7 +81,7 @@
 }
 
 .quiz {
-    min-height: 60vh;
+    min-height: 50vh;
 }
 
 .button-with-bg::after {
@@ -173,6 +175,7 @@ const selectOption = (option) => {
 
 // Emitting the answer or going back to previous question to the parent component
 const emit = defineEmits(['answer', 'back']);
+
 const submitAnswer = () => {
     if (props.question.answerType === 'text') {
         emit('answer', {question: props.question.id, answer: answer.value});

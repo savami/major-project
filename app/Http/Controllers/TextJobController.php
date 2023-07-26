@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TextJob;
+use App\Services\GptService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -23,16 +24,16 @@ class TextJobController extends Controller
         return Inertia::render('TextJobs/TextJobCreate');
     }
 
-//    public function show($userId, $textJobId)
-//    {
-//        $textJob = TextJob::where('user_id', $userId)->where('id', $textJobId)->firstOrFail();
-//
-//        return Inertia::render('TextJobs/TextJobShow', [
-//            'textJob' => $textJob,
-//        ]);
-//    }
+    public function show($userId, $textJobId)
+    {
+        $textJob = TextJob::where('user_id', $userId)->where('id', $textJobId)->firstOrFail();
 
-    public function store(Request $request)
+        return Inertia::render('TextJobs/TextJobShow', [
+            'textJob' => $textJob,
+        ]);
+    }
+
+    public function store(Request $request, GptService $gptService)
     {
         $request->validate([
             'name' => 'required|string',
@@ -41,14 +42,18 @@ class TextJobController extends Controller
             'text_tone' => 'required|in:Formal,Informal,Neutral',
             'audience_intent' => 'required|in:Informational,Commercial,Transactional',
             'primary_keyword' => 'required|string',
-            'secondary_keywords' => 'nullable|json',
-            'frequently_asked_questions' => 'nullable|json',
+            'secondary_keywords' => 'nullable|string',
+//            'frequently_asked_questions' => 'nullable|json',
             'call_to_action' => 'required|in:buy_now,sign_up,learn_more',
             'text_language' => 'required|string',
         ]);
 
         $textJob = new TextJob($request->all());
         $textJob->user_id = auth()->user()->id;
+
+        $seoText = $gptService->generateSeoText($request->all());
+        $textJob->generated_seo_text = $seoText;
+
         $textJob->save();
 
         return redirect('/text-jobs/' . $textJob->id);

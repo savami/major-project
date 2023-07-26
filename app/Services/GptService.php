@@ -23,9 +23,7 @@ class GptService
         // Formulate the prompt for GPT-3
         $preset_prompt = "As an expert SEO-copywriter, how would you approach creating an SEO-optimized text using the following information? \n\n";
 
-//        $prompt = "These are the parameters you should follow. Text subject: '{$subject}', primary keyword: '{$primary_keyword}', secondary keywords: '{$secondary_keywords}', the audience intent is '{$audience_intent}', and the call to action is '{$call_to_action}', please generate a concise, SEO-optimized text. Make sure to address these frequently asked questions: \n\n";
-
-        $prompt = "{$preset_prompt} Given the primary keyword: '{$primary_keyword}', secondary keywords: '{$secondary_keywords}', the audience intent is '{$audience_intent}', and the call to action is '{$call_to_action}', please generate a concise, SEO-optimized text. Make sure to address these frequently asked questions: \n\n";
+        $prompt = "{$preset_prompt} Given the primary keyword: '{$primary_keyword}', secondary keywords: '{$secondary_keywords}', the audience intent is '{$audience_intent}', and the call to action is '{$call_to_action}', please generate a concise, SEO-optimized text about the following subject: '{$subject}'. Make sure to address these frequently asked questions: \n\n";
 
         foreach($frequently_asked_questions as $question){
             $prompt .= "- {$question}\n";

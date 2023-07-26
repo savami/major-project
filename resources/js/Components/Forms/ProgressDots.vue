@@ -1,5 +1,5 @@
 <template>
-    <div class="max-w-6xl mx-auto mt-10 pb-4">
+    <div class="max-w-5xl mx-auto mt-10 pb-4">
         <div class="flex pb-3">
             <div
                 class="flex-1"
