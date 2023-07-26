@@ -1,9 +1,11 @@
 <template>
     <div class="flex flex-col justify-between h-full">
         <div
-            class="text-white bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg py-5 px-8 flex flex-col items-center justify-between h-96">
-            <h2 class="text-3xl font-bold mt-4 text-center">{{ question.title }}</h2>
-            <div v-if="question.answerType === 'text'" class="relative z-0 w-1/2 mb-6 group">
+            class="text-white bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg py-5 px-8 flex flex-col items-center justify-around h-96">
+            <h2 class="text-3xl font-bold mt-4 mb-2 text-center">{{ question.title }}</h2>
+            <p v-if="question.example" class="text-md text-center max-w-3xl">{{ question.explanation }}</p>
+            <p v-else class="text-md text-center max-w-3xl"></p>
+            <div v-if="question.answerType === 'text'" class="relative z-0 w-2/3 my-20 group">
                 <input
                     @keyup.enter="submitAnswer"
                     v-model="answer"
@@ -19,7 +21,7 @@
             <div v-else-if="question.answerType === 'multipleChoice'"
                  :class="`grid gap-10 justify-items-center font-bold grid-cols-${question.options.length}`">
                 <button
-                    class="py-2.5 px-4 w-48 h-36 text-center text-lg text-white bg-transparent border-2 rounded-md border-white appearance-none focus:outline-none focus:ring-0 focus:border-2 transition duration-200 bg-cover button-with-bg hover:scale-105"
+                    class="py-2.5 px-4 w-48 h-36 text-center text-lg my-6 text-white bg-transparent border-2 rounded-md border-white appearance-none focus:outline-none focus:ring-0 focus:border-2 transition duration-200 bg-cover button-with-bg hover:scale-105"
                     :class="{ 'selected': isSelected(option) }"
                     @click="selectOption(option)"
                     v-for="(option, index) in question.options"
@@ -30,13 +32,37 @@
             </div>
 
             <div class="flex w-full justify-between items-center">
-                <button @click="$emit('back')">Back</button>
+                <button @click="$emit('back')"
+                        class="inline-flex items-center gap-x-1.5 rounded-md bg-amber-500 px-5 py-2.5 text-md font-semibold text-white shadow-sm hover:bg-amber-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 transition ease-in-out duration-75">
+                    <ArrowLeftIcon class="h-5 w-5 inline-block mr-1 text-white"/>
+                    Back
+                </button>
 
-                <button v-if="selectedOptions.length === 0 && question.answerType === 'multipleChoice'" @click="submitAnswer">Skip</button>
-                <button v-if="selectedOptions.length > 0 && question.answerType === 'multipleChoice'" @click="submitAnswer">Next</button>
+                <button v-if="selectedOptions.length === 0 && question.answerType === 'multipleChoice'"
+                        @click="submitAnswer"
+                        class="inline-flex items-center gap-x-1.5 rounded-md bg-emerald-500 px-5 py-2.5 text-md font-semibold text-white shadow-sm hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 transition ease-in-out duration-75">
+                    Skip
+                    <ArrowRightIcon class="h-5 w-5 inline-block ml-1 text-white"/>
+                </button>
+                <button v-if="selectedOptions.length > 0 && question.answerType === 'multipleChoice'"
+                        @click="submitAnswer"
+                        class="inline-flex items-center gap-x-1.5 rounded-md bg-emerald-500 px-5 py-2.5 text-md font-semibold text-white shadow-sm hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 transition ease-in-out duration-75">
+                    Next
+                    <ArrowRightIcon class="h-5 w-5 inline-block ml-1 text-white"/>
+                </button>
 
-                <button v-if="answer === '' && question.answerType === 'text'" @click="submitAnswer">Skip</button>
-                <button v-if="answer && question.answerType === 'text'" @click="submitAnswer">Next</button>
+                <button v-if="answer === '' && question.answerType === 'text'"
+                        @click="submitAnswer"
+                        class="inline-flex items-center gap-x-1.5 rounded-md bg-emerald-500 px-5 py-2.5 text-md font-semibold text-white shadow-sm hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 transition ease-in-out duration-75">
+                    Skip
+                    <ArrowRightIcon class="h-5 w-5 inline-block ml-1 text-white"/>
+                </button>
+                <button v-if="answer && question.answerType === 'text'"
+                        @click="submitAnswer"
+                        class="inline-flex items-center gap-x-1.5 rounded-md bg-emerald-500 px-5 py-2.5 text-md font-semibold text-white shadow-sm hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 transition ease-in-out duration-75">
+                    Next
+                    <ArrowRightIcon class="h-5 w-5 inline-block ml-1 text-white"/>
+                </button>
             </div>
         </div>
     </div>
@@ -106,6 +132,7 @@
 
 <script setup>
 import {ref, watchEffect} from 'vue';
+import {ArrowRightIcon, ArrowLeftIcon} from "@heroicons/vue/20/solid";
 
 const props = defineProps({
     question: Object,

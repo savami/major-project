@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-import { PlusIcon, PhotoIcon } from '@heroicons/vue/20/solid';
+import { PlusIcon } from '@heroicons/vue/20/solid';
 import {router} from "@inertiajs/vue3";
 
 

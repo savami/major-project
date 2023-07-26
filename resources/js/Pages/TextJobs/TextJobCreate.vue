@@ -30,7 +30,8 @@ const questions = [
     {
         id: '1',
         title: 'Give your text a title, so you can find it later in your dashboard',
-        example: 'This is purely for you to be able to find your text later in your dashboard',
+        example: 'Example: Solar panel text, electric scooter text, porsche car text, etc.',
+        explanation: 'This is purely for you to be able to find your text later in your dashboard',
         answerType: 'text',
         required: true
     },
@@ -38,13 +39,15 @@ const questions = [
         id: '2',
         title: 'What is the subject of the text?',
         example: 'Example: Marketing agency, electric scooter rentals, plumber company, etc.',
+        explanation: 'Choose this carefully, because this is what the text will mainly be about. You can enter a description here, such as "Marketing agency in New York".',
         answerType: 'text',
         required: true
     },
     {
         id: '3',
         title: 'How many words should the text be?',
-        example: 'Enter how many words you want the text to be (max. 500 words)',
+        example: 'Enter how many words you want the text to be (max. 500)',
+        explanation: 'It will not work if any other characters than numbers are entered',
         answerType: 'text',
         required: true
     },
@@ -52,6 +55,7 @@ const questions = [
         id: '4',
         title: 'What is the tone of the text?',
         example: '',
+        explanation: 'Formal for a professional style text, informal for a casual style text, and neutral for an general style text. If in doubt, skip this question.',
         answerType: 'multipleChoice',
         required: false,
         options: [
@@ -76,6 +80,7 @@ const questions = [
         title: 'What is the purpose of the text?',
         example: '',
         answerType: 'multipleChoice',
+        explanation: 'Informational for a text that informs the reader, commercial for a text that sells a product or service, transactional for a text that guides the reader to take action to buy a product, instructional for a text that teaches the reader how to do something, and entertainment for a text that entertains the reader. If in doubt, skip this question.',
         required: false,
         options: [
             {
@@ -106,29 +111,33 @@ const questions = [
     },
     {
         id: '6',
-        title: 'What is your primary keyword? (Max. 2 words)',
+        title: 'What is your primary keyword?',
         example: 'Example: Solar panel, electric scooter, porsche car, etc.',
         answerType: 'text',
+        explanation: 'This is the main keyword you want the text to rank for in Google. Only enter your main keyword here. If you add more here, the tool will be confused and inconsistent.',
         required: true,
     },
     {
         id: '7',
         title: 'What are your secondary keywords?',
-        example: 'Separate each keyword with a comma',
+        example: 'Example: How to install solar panels, best electric scooter 2023, porsche car engine, etc.',
+        explanation: 'These are the secondary keywords you want the text to rank for in Google. Separate each keyword with a comma.',
         answerType: 'text',
         required: false,
     },
     {
         id: '8',
-        title: 'What user questions are you targeting to answer? (Frequently searched by users)',
+        title: 'What user questions are you targeting to answer?',
         example: 'Example: What is the best e-scooter?',
+        explanation: 'These are the frequent questions users have regarding your text subject that you want the text to answer. Separate each question with a comma.',
         answerType: 'text',
         required: false,
     },
     {
         id: '9',
-        title: 'What is the call to action? (What do you want the user to do after reading the text?)',
+        title: 'What is the call to action?',
         example: '',
+        explanation: 'What do you want the user to do after reading the text? Having a call to action is very important. No text is simply random, it has a purpose. The purpose of the text is to get the user to do something. What do you want the user to do after reading the text?',
         answerType: 'multipleChoice',
         required: false,
         options: [
@@ -156,8 +165,9 @@ const questions = [
     },
     {
         id: '10',
-        title: 'What language should the text be in? (Skip for English)',
+        title: 'What language should the text be in?',
         example: 'Example: German, French, Spanish, etc.',
+        explanation: 'If you want the text to be in English, skip this question. If you want the text to be in another language, enter the language here. Keep in mind that results will be better for English texts',
         answerType: 'text',
         required: false,
     }
