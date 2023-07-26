@@ -37,6 +37,8 @@ Route::middleware([
 
     // Text jobs routes
     Route::get('/text-job/create', [TextJobController::class, 'create'])->name('textJobs.create');
+    Route::get('/text-job/{userId}/{textJobId}', [TextJobController::class, 'show'])->name('textJobs.show');
+    Route::get('/text-jobs', [TextJobController::class, 'index'])->name('textJobs.index');
     Route::post('/text-jobs', [TextJobController::class, 'store'])->name('textJobs.store');
 
     // Photo jobs routes
