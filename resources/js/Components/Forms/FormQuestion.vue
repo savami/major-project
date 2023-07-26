@@ -1,17 +1,17 @@
 <template>
     <div class="flex flex-col justify-between h-full">
         <div
-            class="text-white bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg py-5 px-8 flex flex-col items-center justify-around h-96">
+            class="text-white bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg py-5 px-8 flex flex-col items-center justify-around quiz">
             <h2 class="text-3xl font-bold mt-4 mb-2 text-center">{{ question.title }}</h2>
-            <p v-if="question.example" class="text-md text-center max-w-3xl">{{ question.explanation }}</p>
-            <p v-else class="text-md text-center max-w-3xl"></p>
+            <p v-if="question.explanation" class="text-md text-center max-w-4xl h-12">{{ question.explanation }}</p>
+            <p v-if="!question.explanation" class="text-md text-center max-w-4xl h-12"></p>
             <div v-if="question.answerType === 'text'" class="relative z-0 w-2/3 my-20 group">
                 <input
                     @keyup.enter="submitAnswer"
                     v-model="answer"
                     type="text"
                     placeholder=" "
-                    class="block py-2.5 px-4 w-full text-sm text-white bg-transparent border-2 rounded-md border-white appearance-none focus:outline-none focus:ring-0 focus:border-2 focus:border-teal-300 transition duration-200 peer"/>
+                    class="block py-2.5 px-4 w-full mb-6 text-sm text-white bg-transparent border-2 rounded-md border-white appearance-none focus:outline-none focus:ring-0 focus:border-2 focus:border-teal-300 transition duration-200 peer"/>
                 <label
                     class="peer-focus:font-bold absolute text-sm text-white duration-300 pl-4 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:pl-0.5 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-90 peer-focus:-translate-y-9">
                     {{ question.example }}
@@ -19,7 +19,7 @@
             </div>
 
             <div v-else-if="question.answerType === 'multipleChoice'"
-                 :class="`grid gap-10 justify-items-center font-bold grid-cols-${question.options.length}`">
+                 :class="`grid gap-10 my-10 justify-items-center font-bold grid-cols-${question.options.length}`">
                 <button
                     class="py-2.5 px-4 w-48 h-36 text-center text-lg my-6 text-white bg-transparent border-2 rounded-md border-white appearance-none focus:outline-none focus:ring-0 focus:border-2 transition duration-200 bg-cover button-with-bg hover:scale-105"
                     :class="{ 'selected': isSelected(option) }"
@@ -31,7 +31,7 @@
                 </button>
             </div>
 
-            <div class="flex w-full justify-between items-center">
+            <div class="flex w-full justify-between items-center mb-4 px-2.5">
                 <button @click="$emit('back')"
                         class="inline-flex items-center gap-x-1.5 rounded-md bg-amber-500 px-5 py-2.5 text-md font-semibold text-white shadow-sm hover:bg-amber-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 transition ease-in-out duration-75">
                     <ArrowLeftIcon class="h-5 w-5 inline-block mr-1 text-white"/>
@@ -76,6 +76,10 @@
 .button-with-bg {
     position: relative;
     overflow: hidden;
+}
+
+.quiz {
+    min-height: 60vh;
 }
 
 .button-with-bg::after {
