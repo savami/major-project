@@ -18,12 +18,16 @@ class GptService
         $call_to_action = $form['call_to_action'][0];
         $word_amount = $form['word_amount'];
         $text_tone = $form['text_tone'][0];
-        $text_lnaguage = $form['text_language'];
+        $text_language = $form['text_language'];
 
         // Formulate the prompt for GPT-3
         $preset_prompt = "As an expert SEO-copywriter, please write an SEO-optimized text using the following information: \n\n";
 
+        $prompt = "{$preset_prompt} Write a {$word_amount}-word {$audience_intent} text about {$subject}. The primary keyword is: '{$primary_keyword}', and the secondary keywords are: '{$secondary_keywords}'. The audience intent is {$audience_intent} and the text should target the {$call_to_action} call to action. Please use a {$text_tone} tone. \n\n";
 
+        if (strtolower($text_language) !== "english") {
+            $prompt .= "The text should be written in {$text_language}.\n\n";
+        }
 
 //        $prompt = "{$preset_prompt} Given the primary keyword: '{$primary_keyword}', secondary keywords: '{$secondary_keywords}', the audience intent is '{$audience_intent}', and the call to action is '{$call_to_action}', please generate a concise, SEO-optimized text about the following subject: '{$subject}'. Make sure to address these frequently asked questions: \n\n";
 
