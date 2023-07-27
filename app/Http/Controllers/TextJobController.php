@@ -37,6 +37,7 @@ class TextJobController extends Controller
 
         return Inertia::render('TextJobs/TextJobShow', [
             'seoText' => $seoText,
+            'textJob' => $textJob,
         ]);
     }
 
