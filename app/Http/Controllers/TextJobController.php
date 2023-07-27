@@ -69,6 +69,7 @@ class TextJobController extends Controller
             }
         }
 
+        try {
         $validateData = Validator::make($data, [
             'name' => 'required|string',
             'subject' => 'required|string',
@@ -78,9 +79,11 @@ class TextJobController extends Controller
             'primary_keyword' => 'required|string',
             'secondary_keywords' => 'nullable|string',
             'call_to_action' => 'required|string',
+            'text_language' => 'nullable',
             ])->validate();
-
-        $validateData['word_amount'] = intval($validateData['word_amount']);
+        } catch (\Exception $e) {
+            dd($e);
+        }
 
 //        $request->validate([
 //            'name' => 'required|string',

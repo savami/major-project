@@ -188,7 +188,7 @@ const questions = [
 const questionIdToFormKey = {
     '1': 'name',
     '2': 'subject',
-    '3': 'word_count',
+    '3': 'word_amount',
     '4': 'text_tone',
     '5': 'audience_intent',
     '6': 'primary_keyword',
@@ -203,7 +203,7 @@ const currentQuestionIndex = ref(0);
 const form = useForm({
     name: '',
     subject: '',
-    word_count: '',
+    word_amount: '',
     text_tone: '',
     audience_intent: '',
     primary_keyword: '',
