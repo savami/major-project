@@ -9,15 +9,16 @@
                         <p class="mt-6 text-lg leading-8 text-white">Your AI assistant for SEO optimized texts and stock
                             photos</p>
 
-                        <!-- Add the two buttons -->
-                        <div class="mt-6 space-x-4">
+                        <div class="mt-6 flex justify-center space-x-4">
                             <Link :href="route('textJobs.create')"
-                                  class="inline-block px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
+                                  class="inline-flex items-center px-5 py-4 border border-transparent text-lg leading-6 font-bold rounded-md text-white bg-emerald-500 hover:bg-green-400 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-green-600 transition duration-150 ease-in-out">
+                                <ChatBubbleBottomCenterTextIcon class="mr-2 h-4 w-4" aria-hidden="true"/>
                                 Generate SEO text
                             </Link>
                             <Link :href="route('photoJobs.create')"
-                                  class="inline-block px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
+                                  class="inline-flex items-center px-5 py-4 border border-transparent text-lg leading-6 font-bold rounded-md text-white bg-purple-500 hover:bg-purple-400 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-purple-600 transition duration-150 ease-in-out">
                                 Find stock photos
+                                <PhotoIcon class="ml-2 h-4 w-4" aria-hidden="true"/>
                             </Link>
                         </div>
 
@@ -30,5 +31,6 @@
 
 <script setup>
 import AnimatedBackgroundLayout from "../Layouts/AnimatedBackgroundLayout.vue";
+import { ChatBubbleBottomCenterTextIcon, PhotoIcon } from "@heroicons/vue/20/solid/index.js";
 import { Link } from "@inertiajs/vue3";
 </script>
