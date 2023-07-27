@@ -48,7 +48,7 @@ const questions = [
         title: 'How many words should the text be?',
         example: 'Enter how many words you want the text to be (max. 500)',
         explanation: 'It will not work if any other characters than numbers are entered',
-        answerType: 'text',
+        answerType: 'number',
         required: true
     },
     {
@@ -72,6 +72,7 @@ const questions = [
             {
                 id: '3',
                 title: 'Straightforward',
+                background: ''
             },
             {
                 id: '4',
@@ -106,6 +107,7 @@ const questions = [
             {
                 id: '3',
                 title: 'Transactional',
+                background: ''
             },
             {
                 id: '4',

@@ -20,6 +20,22 @@
                 </label>
             </div>
 
+            <div v-if="question.answerType === 'number'" class="relative z-0 w-2/3 group">
+                <input
+                    @keyup.enter="submitAnswer"
+                    v-model.number="answer"
+                    type="number"
+                    min="1"
+                    max="500"
+                    placeholder=" "
+                    class="block py-2.5 px-4 w-full mb-6 text-sm text-white bg-transparent border-2 rounded-md border-white appearance-none focus:outline-none focus:ring-0 focus:border-2 focus:border-teal-300 transition duration-200 peer"/>
+                <label
+                    class="peer-focus:font-bold absolute text-sm text-white duration-300 pl-4 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:pl-0.5 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-90 peer-focus:-translate-y-9">
+                    {{ question.example }}
+                </label>
+            </div>
+
+
             <div v-else-if="question.answerType === 'multipleChoice'"
                  :class="`grid gap-10 my-10 justify-items-center font-bold grid-cols-${question.options.length}`">
                 <button
@@ -47,6 +63,19 @@
                     <ArrowRightIcon class="h-5 w-5 inline-block ml-1 text-white"/>
                 </button>
                 <button v-if="selectedOptions.length > 0 && question.answerType === 'multipleChoice'"
+                        @click="submitAnswer"
+                        class="inline-flex items-center gap-x-1.5 rounded-md bg-emerald-500 px-5 py-2.5 text-md font-semibold text-white shadow-sm hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 transition ease-in-out duration-75">
+                    Next
+                    <ArrowRightIcon class="h-5 w-5 inline-block ml-1 text-white"/>
+                </button>
+
+                <button v-if="answer === '' && question.answerType === 'number'"
+                        @click="submitAnswer"
+                        class="inline-flex items-center gap-x-1.5 rounded-md bg-emerald-500 px-5 py-2.5 text-md font-semibold text-white shadow-sm hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 transition ease-in-out duration-75">
+                    Skip
+                    <ArrowRightIcon class="h-5 w-5 inline-block ml-1 text-white"/>
+                </button>
+                <button v-if="answer && question.answerType === 'number'"
                         @click="submitAnswer"
                         class="inline-flex items-center gap-x-1.5 rounded-md bg-emerald-500 px-5 py-2.5 text-md font-semibold text-white shadow-sm hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 transition ease-in-out duration-75">
                     Next
@@ -149,7 +178,7 @@ const selectedOptions = ref([]);
 
 // Resetting field after proceeding to next question
 watchEffect(() => {
-    if (props.question.answerType === 'text') {
+    if (props.question.answerType === 'text' || props.question.answerType === 'number') {
         answer.value = '';
     } else if (props.question.answerType === 'multipleChoice') {
         selectedOptions.value = [];
@@ -177,7 +206,7 @@ const selectOption = (option) => {
 const emit = defineEmits(['answer', 'back']);
 
 const submitAnswer = () => {
-    if (props.question.answerType === 'text') {
+    if (props.question.answerType === 'text' || props.question.answerType === 'number') {
         emit('answer', {question: props.question.id, answer: answer.value});
         console.log(props.question.id, answer.value);
     } else if (props.question.answerType === 'multipleChoice') {

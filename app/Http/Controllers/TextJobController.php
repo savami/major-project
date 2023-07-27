@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\TextJob;
 use App\Services\GptService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
 class TextJobController extends Controller
@@ -28,27 +29,73 @@ class TextJobController extends Controller
     {
         $textJob = TextJob::where('user_id', $userId)->where('id', $textJobId)->firstOrFail();
 
+        if ($textJob->user_id !== auth()->user()->id) {
+            abort(403);
+        };
+
+        $seoText = $textJob->generated_seo_text;
+
         return Inertia::render('TextJobs/TextJobShow', [
-            'textJob' => $textJob,
+            'seoText' => $seoText,
         ]);
     }
 
     public function store(Request $request, GptService $gptService)
     {
-        $request->validate([
+        $data = $request->all();
+
+        $defaultData = [
+            'name' => '',
+            'subject' => '',
+            'word_amount' => '',
+            'text_tone' => '',
+            'audience_intent' => '',
+            'primary_keyword' => '',
+            'secondary_keywords' => '',
+//            'frequently_asked_questions' => '',
+            'call_to_action' => '',
+            'text_language' => '',
+        ];
+
+        $data = array_merge($defaultData, $data);
+
+        foreach ($data as $questionId => $answer) {
+            if (is_array($answer)) {
+                if (count($answer) === 1) {
+                    $data[$questionId] = $answer[0];
+                } elseif (count($answer) === 0) {
+                    $data[$questionId] = null;
+                }
+            }
+        }
+
+        $validateData = Validator::make($data, [
             'name' => 'required|string',
             'subject' => 'required|string',
             'word_amount' => 'required|integer',
-            'text_tone' => 'required|in:Formal,Informal,Neutral',
-            'audience_intent' => 'required|in:Informational,Commercial,Transactional',
+            'text_tone' => 'required|string',
+            'audience_intent' => 'required|string',
             'primary_keyword' => 'required|string',
             'secondary_keywords' => 'nullable|string',
-//            'frequently_asked_questions' => 'nullable|json',
-            'call_to_action' => 'required|in:buy_now,sign_up,learn_more',
-            'text_language' => 'required|string',
-        ]);
+            'call_to_action' => 'required|string',
+            ])->validate();
 
-        $textJob = new TextJob($request->all());
+        $validateData['word_amount'] = intval($validateData['word_amount']);
+
+//        $request->validate([
+//            'name' => 'required|string',
+//            'subject' => 'required|string',
+//            'word_amount' => 'required|integer',
+//            'text_tone' => 'required|string',
+//            'audience_intent' => 'required|string',
+//            'primary_keyword' => 'required|string',
+//            'secondary_keywords' => 'nullable|string',
+////            'frequently_asked_questions' => 'nullable|json',
+//            'call_to_action' => 'required|string',
+//            'text_language' => 'nullable',
+//        ]);
+
+        $textJob = new TextJob($validateData);
         $textJob->user_id = auth()->user()->id;
 
         $seoText = $gptService->generateSeoText($request->all());
@@ -56,6 +103,6 @@ class TextJobController extends Controller
 
         $textJob->save();
 
-        return redirect('/text-jobs/' . $textJob->id);
+        return redirect()->route('textJobs.show', ['userId' => $textJob->user_id, 'textJobId' => $textJob->id]);
     }
 }
