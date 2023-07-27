@@ -85,19 +85,6 @@ class TextJobController extends Controller
             dd($e);
         }
 
-//        $request->validate([
-//            'name' => 'required|string',
-//            'subject' => 'required|string',
-//            'word_amount' => 'required|integer',
-//            'text_tone' => 'required|string',
-//            'audience_intent' => 'required|string',
-//            'primary_keyword' => 'required|string',
-//            'secondary_keywords' => 'nullable|string',
-////            'frequently_asked_questions' => 'nullable|json',
-//            'call_to_action' => 'required|string',
-//            'text_language' => 'nullable',
-//        ]);
-
         $textJob = new TextJob($validateData);
         $textJob->user_id = auth()->user()->id;
 
@@ -107,5 +94,18 @@ class TextJobController extends Controller
         $textJob->save();
 
         return redirect()->route('textJobs.show', ['userId' => $textJob->user_id, 'textJobId' => $textJob->id]);
+    }
+
+    public function destroy($userId, $textJobId)
+    {
+        $textJob = TextJob::where('user_id', $userId)->where('id', $textJobId)->firstOrFail();
+
+        if ($textJob->user_id !== auth()->user()->id) {
+            abort(403);
+        };
+
+        $textJob->delete();
+
+        return redirect()->route('textJobs.index')->with('success', 'Text job deleted successfully');
     }
 }
