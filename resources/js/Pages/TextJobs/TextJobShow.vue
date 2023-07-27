@@ -1,8 +1,8 @@
 <template>
     <AnimatedBackgroundLayout>
         <h1 class="text-center my-8 text-3xl text-white font-bold">Result</h1>
-        <div class="textToBeCopied relative p-4">
-            <pre class="text-gray-200">{{ seoText }}</pre>
+        <div class="textToBeCopied relative">
+            <pre id="typing-effect" class="text-gray-200 bg-white rounded bg-opacity-20 backdrop-blur-xl drop-shadow-lg max-w-4xl mx-auto">{{ displayedText }}</pre>
             <div class="text-center mt-8">
                 <button
                     type="button"
@@ -20,14 +20,26 @@
 <style scoped>
 pre {
     white-space: pre-wrap;
-    padding: 0 11rem;
+    padding: 1rem 2rem;
 
+}
+
+#typing-effect::after {
+    content: "|";
+    animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
 }
 </style>
 
 <script setup>
 import AnimatedBackgroundLayout from "../../Layouts/AnimatedBackgroundLayout.vue";
 import {ClipboardIcon} from "@heroicons/vue/20/solid/index.js";
+import {ref, watchEffect} from "vue";
 
 const props = defineProps({
     seoText: {
@@ -35,6 +47,18 @@ const props = defineProps({
         required: true
     }
 })
+
+let displayedText = ref('');
+let currentIndex = ref(0);
+
+watchEffect(() => {
+    if (currentIndex.value < props.seoText.length) {
+        setTimeout(() => {
+            displayedText.value += props.seoText[currentIndex.value];
+            currentIndex.value++;
+        }, 10);
+    }
+});
 
 function copyToClipboard() {
     // Create a new textarea element and give it id='temp_element'
