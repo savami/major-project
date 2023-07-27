@@ -13,7 +13,7 @@
 <!--        </div>-->
 
         <div class="py-12 w-full">
-                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
                     <FormQuestion
                         v-if="currentQuestion"
                         :question="currentQuestion"
@@ -36,7 +36,8 @@ const questions = [
     {
         id: '1',
         title: 'What is the subject of the photos?',
-        example: 'Example: Happy woman, sad man, a city, a plant, etc.',
+        example: 'Example: Happy woman, sad man, New York, palm tree, etc.',
+        explanation: 'Choose this carefully. This is the main subject of the photos. Keep this as short and concise as possible.',
         answerType: 'text'
     },
     // {
@@ -47,14 +48,16 @@ const questions = [
     // },
     {
         id: '2',
-        title: 'Are there specific elements to be included in the photo?',
-        example: 'Example: Vintage, birds, landscape background, river, skyscrapers, etc.',
+        title: 'Are there specific elements or styles to be included in the photo?',
+        example: 'Example: Vintage, birds, bicycle, car, river, skyscrapers, etc.',
+        explanation: 'This is the secondary parameter, which will be used to further specify the desired result.',
         answerType: 'text'
     },
     {
         id: '3',
         title: 'Should the photos be in portrait or landscape orientation?',
-        example: 'Select one or skip if you want all formats',
+        example: '',
+        explanation: 'Selecting one of these might limit the amount of results. It is recommended to skip this question if you are unsure.',
         answerType: 'multipleChoice',
         options: [
             {
@@ -78,6 +81,7 @@ const questions = [
         id: '4',
         title: 'Do you prefer a regular or monochrome style photo?',
         example: '',
+        explanation: 'Select regular for all results, or monochrome for black and white results.',
         answerType: 'multipleChoice',
         options: [
             {
@@ -113,26 +117,31 @@ const questions = [
     {
         id: '5',
         title: 'What should the size of the photo be?',
-        example: 'Small (4MP), Medium (12MP), Large (24MP)',
+        example: '',
+        explanation: 'These options affect the resolution of the photos. It is recommended to skip this question if you are unsure. Small (4MP), Medium (12MP), Large (24MP).',
         answerType: 'multipleChoice',
         options: [
             {
                 id: '1',
                 title: 'Small',
+                background: '',
             },
             {
                 id: '2',
                 title: 'Medium',
+                background: '',
             },
             {
                 id: '3',
                 title: 'Large',
+                background: '',
             },
         ]
     },
     {
         id: '6',
         title: 'Which colors should be used in the photo?',
+        explanation: 'This field specifies what color should be included in the photo. It is recommended to skip this question if you are unsure.',
         example: 'Enter hex code or color name (e.g. #ffffff or white), or leave blank for any color',
         answerType: 'text',
     }
