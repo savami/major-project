@@ -35,6 +35,8 @@ import ProgressDots from "../../Components/Forms/ProgressDots.vue";
 const questions = [
     {
         id: '1',
+        validation: true,
+        error: 'This field is required',
         title: 'What is the subject of the photos?',
         example: 'Example: Happy woman, sad man, New York, palm tree, etc.',
         explanation: 'Choose this carefully. This is the main subject of the photos. Keep this as short and concise as possible.',
@@ -48,6 +50,8 @@ const questions = [
     // },
     {
         id: '2',
+        validation: true,
+        error: 'This field is required',
         title: 'Are there specific elements or styles to be included in the photo?',
         example: 'Example: Vintage, birds, bicycle, car, river, skyscrapers, etc.',
         explanation: 'This is the secondary parameter, which will be used to further specify the desired result.',
@@ -55,7 +59,8 @@ const questions = [
     },
     {
         id: '3',
-        title: 'Should the photos be in portrait or landscape orientation?',
+        validation: false,
+        title: 'Do you wish to have a specific orientation?',
         example: '',
         explanation: 'Selecting one of these might limit the amount of results. It is recommended to skip this question if you are unsure.',
         answerType: 'multipleChoice',
@@ -79,6 +84,7 @@ const questions = [
     },
     {
         id: '4',
+        validation: false,
         title: 'Do you prefer a regular or monochrome style photo?',
         example: '',
         explanation: 'Select regular for all results, or monochrome for black and white results.',
@@ -116,6 +122,7 @@ const questions = [
     // },
     {
         id: '5',
+        validation: false,
         title: 'What should the size of the photo be?',
         example: '',
         explanation: 'These options affect the resolution of the photos. It is recommended to skip this question if you are unsure. Small (4MP), Medium (12MP), Large (24MP).',
@@ -140,8 +147,9 @@ const questions = [
     },
     {
         id: '6',
-        title: 'Which colors should be used in the photo?',
-        explanation: 'This field specifies what color should be included in the photo. It is recommended to skip this question if you are unsure.',
+        validation: false,
+        title: 'Which color should be included in the photo?',
+        explanation: 'This field specifies what color should be included in the photo. It is recommended to skip this question if you are unsure. Supported colors: red, orange, yellow, green, turquoise, blue, violet, pink, brown, black, gray, white or any hexadecimal color code (eg. #ffffff).',
         example: 'Enter hex code or color name (e.g. #ffffff or white), or leave blank for any color',
         answerType: 'text',
     }
@@ -171,10 +179,7 @@ const form = useForm({
     color: '',
 });
 
-
 const currentQuestion = computed(() => questions[currentQuestionIndex.value]);
-
-// let answers = ref([]);
 
 const nextQuestion = () => {
     currentQuestionIndex.value++;
