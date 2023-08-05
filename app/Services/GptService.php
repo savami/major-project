@@ -24,7 +24,9 @@ class GptService
 
         $prompt = "Write a {$word_amount}-word {$audience_intent} text about {$subject}. The primary keyword is: '{$primary_keyword}', and the secondary keywords are: '{$secondary_keywords}'. The audience intent is {$audience_intent} and the text should target the '{$call_to_action}' call to action. Please use a {$text_tone} tone. \n\n";
 
-        if (strtolower($text_language) !== "english") {
+        if ($text_language !== "") {
+            $prompt .= "The text should be written in English.\n\n";
+        } else {
             $prompt .= "The text should be written in {$text_language}.\n\n";
         }
 
