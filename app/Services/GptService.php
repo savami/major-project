@@ -65,11 +65,14 @@ class GptService
             }
         }
 
+        // Make the API call (for GPT-3.5 models such as 'gpt-3.5-turbo')
         if ($openAiEngine === 'gpt-3.5-turbo') {
+
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . $openAiApiKey,
                 'Content-Type' => 'application/json',
-            ])->post('https://api.openai.com/v1/engines/gpt-3.5-turbo/completions', [
+            ])->post('https://api.openai.com/v1/chat/completions', [
+                'model' => $openAiEngine,
                 'messages' => [
                     [
                         'role' => 'system',
@@ -82,10 +85,6 @@ class GptService
                 ],
                 'max_tokens' => $form['word_amount'] * 10, // 10 tokens per word
                 'temperature' => 0.5, // Not too random, but also not too precise/predictable
-                'top_p' => 1,
-                'n' => 1,
-                'stream' => false,
-                'stop' => ['\n'],
 //            'presence_penalty' => 0.1,
 //            'frequency_penalty' => 0.6,
             ]);
@@ -144,31 +143,68 @@ class GptService
         $openAiEngine = config('openai.engine');
 
         // Make the API call
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $openAiApiKey,
-            'Content-Type' => 'application/json',
-        ])->post('https://api.openai.com/v1/engines/' . $openAiEngine . '/completions', [
-            'prompt' => $prompt,
-            'max_tokens' => 64,
-            'temperature' => 0.7,
-            'top_p' => 1,
-            'n' => 1,
-            'stream' => false,
-            'logprobs' => null,
-            'stop' => ['\n'],
-        ]);
+        if ($openAiEngine === 'text-davinci-003') {
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $openAiApiKey,
+                'Content-Type' => 'application/json',
+            ])->post('https://api.openai.com/v1/engines/' . $openAiEngine . '/completions', [
+                'prompt' => $prompt,
+                'max_tokens' => 64,
+                'temperature' => 0.7,
+                'top_p' => 1,
+                'n' => 1,
+                'stream' => false,
+                'logprobs' => null,
+                'stop' => ['\n'],
+            ]);
 
-        if ($response->successful()) {
-            $result = $response->json();
-            $enhancedQuery = trim($result['choices'][0]['text']);
+            if ($response->successful()) {
+                $result = $response->json();
+                $enhancedQuery = trim($result['choices'][0]['text']);
 
-            // Logging for ease-of-use while testing the prompts/queries/outputs
-            Log::info('Original Query: ' . $query . ' | Summary: ' . $summary . ' | Enhanced Query: ' . $enhancedQuery);
+                // Logging for ease-of-use while testing the prompts/queries/outputs
+                Log::info('Original Query: ' . $query . ' | Summary: ' . $summary . ' | Enhanced Query: ' . $enhancedQuery);
 
-            return $enhancedQuery;
-        } else {
-            Log::error('OpenAI API request failed: ' . $response->body());
-            return $query; // return the original query if the API request fails
+                return $enhancedQuery;
+            } else {
+                Log::error('OpenAI API request failed: ' . $response->body());
+                return $query; // return the original query if the API request fails
+            }
+        }
+
+        // Make the API call (for GPT-3.5 models such as 'gpt-3.5-turbo')
+        if ($openAiEngine === 'gpt-3.5-turbo') {
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $openAiApiKey,
+                'Content-Type' => 'application/json',
+            ])->post('https://api.openai.com/v1/chat/completions', [
+                'model' => $openAiEngine,
+                'messages' => [
+                    [
+                        'role' => 'system',
+                        'content' => "You are an AI developed by OpenAI. Your task is to create concise, natural language search queries for finding specific photos on Pexels. Your queries should not include the words 'subject', 'mood', 'elements', 'style', 'photo', 'image' or 'setting', and should be less than 10 words. Do NOT add quotation marks around your query."
+                    ],
+                    [
+                        'role' => 'user',
+                        'content' => "Generate a search query for a photo with the following requirements: " . $query
+                    ]
+                ],
+                'max_tokens' => 64,
+                'temperature' => 0.4, // Not too random, but also not too precise/predictable
+            ]);
+
+            if ($response->successful()) {
+                $result = $response->json();
+                $enhancedQuery = trim($result['choices'][0]['message']['content']);
+
+                // Logging for ease-of-use while testing the prompts/queries/outputs
+                Log::info('Original Query: ' . $query . ' | Enhanced Query: ' . $enhancedQuery);
+
+                return $enhancedQuery;
+            } else {
+                Log::error('OpenAI API request failed: ' . $response->body());
+                return $query; // return the original query if the API request fails
+            }
         }
     }
 }

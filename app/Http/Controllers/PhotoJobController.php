@@ -50,7 +50,6 @@ class PhotoJobController extends Controller
                     $data[$questionId] = $answer[0];
                 } elseif (count($answer) === 0) {
                     $data[$questionId] = null;
-                    // TODO: Remove multiple selections and add skip option to nullable questions
                 }
             }
         }
