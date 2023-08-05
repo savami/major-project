@@ -4,13 +4,14 @@
             class="text-white bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg py-10 px-8 flex flex-col items-center justify-between quiz">
             <div class="mb-10">
                 <h2 class="text-3xl font-bold mb-2.5 text-center">{{ question.title }}</h2>
-                <p v-if="question.explanation" class="text-md text-center max-w-4xl md:h-6 lg:h-1">{{ question.explanation }}</p>
+                <p v-if="question.explanation" class="text-md text-center max-w-4xl md:h-6 lg:h-1">
+                    {{ question.explanation }}</p>
                 <p v-if="!question.explanation" class="text-md text-center max-w-4xl hidden"></p>
             </div>
             <div v-if="question.answerType === 'text'" class="relative z-0 w-2/3 group">
                 <input
                     @keyup.enter="submitAnswer"
-                    @keyup="resetError"
+                    @keydown="resetError"
                     v-model="answer"
                     type="text"
                     placeholder=" "
@@ -19,29 +20,57 @@
                     class="peer-focus:font-bold absolute text-sm text-white duration-300 pl-4 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:pl-0.5 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-90 peer-focus:-translate-y-9">
                     {{ question.example }}
                 </label>
-                <div v-if="error" class="text-red-500 text-sm font-bold mt-1 ml-0.5 transition-all ease-in-out duration-75">{{ error }}</div>
+                <div v-if="error"
+                     class="text-red-500 text-sm font-bold mt-1 ml-0.5 transition-all ease-in-out duration-75 h-2">
+                    {{ error }}
+                </div>
+                <div v-else class="text-red-500 text-sm font-bold mt-1 ml-0.5 transition-all ease-in-out duration-75 h-2"></div>
             </div>
 
             <div v-if="question.answerType === 'number'" class="relative z-0 w-2/3 group">
                 <input
                     @keyup.enter="submitAnswer"
+                    @keydown="resetError"
                     v-model.number="answer"
                     type="number"
                     min="1"
                     max="500"
                     placeholder=" "
-                    class="block py-2.5 px-4 w-full mb-6 text-sm text-white bg-transparent border-2 rounded-md border-white appearance-none focus:outline-none focus:ring-0 focus:border-2 focus:border-teal-300 transition duration-200 peer"/>
+                    :class="{'block py-2.5 px-4 w-full text-sm text-white bg-transparent border-2 rounded-md border-white appearance-none focus:outline-none focus:ring-0 focus:border-2 focus:border-teal-300 transition duration-200 peer' : true, 'border-red-500 focus:border-red-500' : error}"/>
                 <label
                     class="peer-focus:font-bold absolute text-sm text-white duration-300 pl-4 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:pl-0.5 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-90 peer-focus:-translate-y-9">
                     {{ question.example }}
                 </label>
+                <div v-if="error"
+                     class="text-red-500 text-sm font-bold mt-1 ml-0.5 transition-all ease-in-out duration-75 h-2">
+                    {{ error }}
+                </div>
+                <div v-else class="text-red-500 text-sm font-bold mt-1 ml-0.5 transition-all ease-in-out duration-75 h-2"></div>
             </div>
 
 
+<!--            <div v-else-if="question.answerType === 'multipleChoice'"-->
+<!--                 :class="`grid gap-10 my-10 justify-items-center font-bold grid-cols-${question.options.length}`">-->
+<!--                <button-->
+<!--                    class="py-2.5 px-4 w-48 h-36 text-center text-lg my-6 text-white bg-transparent border-2 rounded-md border-white appearance-none focus:outline-none focus:ring-0 focus:border-2 transition duration-200 bg-cover button-with-bg hover:scale-105"-->
+<!--                    :class="{ 'selected': isSelected(option) }"-->
+<!--                    @click="selectOption(option)"-->
+<!--                    v-for="(option, index) in question.options"-->
+<!--                    :key="index"-->
+<!--                    :style="{ '&#45;&#45;image-url': `url(${option.background})`}">-->
+<!--                    <span>{{ option.title }}</span>-->
+<!--                </button>-->
+<!--                <div v-if="error"-->
+<!--                     class="text-red-500 text-sm font-bold mt-1 ml-0.5 transition-all ease-in-out duration-75 h-2">-->
+<!--                    {{ error }}-->
+<!--                </div>-->
+<!--                <div v-else class="text-red-500 text-center text-sm font-bold mt-1 ml-0.5 transition-all ease-in-out duration-75 h-2"></div>-->
+<!--            </div>-->
+
             <div v-else-if="question.answerType === 'multipleChoice'"
-                 :class="`grid gap-10 my-10 justify-items-center font-bold grid-cols-${question.options.length}`">
+                 :class="`flex flex-wrap justify-center items-center my-10 font-bold`">
                 <button
-                    class="py-2.5 px-4 w-48 h-36 text-center text-lg my-6 text-white bg-transparent border-2 rounded-md border-white appearance-none focus:outline-none focus:ring-0 focus:border-2 transition duration-200 bg-cover button-with-bg hover:scale-105"
+                    class="py-2.5 px-4 w-48 h-36 text-center text-lg my-6 mx-5 text-white bg-transparent border-2 rounded-md border-white appearance-none focus:outline-none focus:ring-0 focus:border-2 transition duration-200 bg-cover button-with-bg hover:scale-105"
                     :class="{ 'selected': isSelected(option) }"
                     @click="selectOption(option)"
                     v-for="(option, index) in question.options"
@@ -49,6 +78,11 @@
                     :style="{ '--image-url': `url(${option.background})`}">
                     <span>{{ option.title }}</span>
                 </button>
+                <div v-if="error"
+                     class="text-red-500 text-sm font-bold mt-1 ml-0.5 transition-all ease-in-out duration-75 h-2 w-full text-center">
+                    {{ error }}
+                </div>
+                <div v-else class="text-red-500 text-center text-sm font-bold mt-1 ml-0.5 transition-all ease-in-out duration-75 h-2 w-full"></div>
             </div>
 
             <div class="flex w-full justify-between items-center px-3">
@@ -142,7 +176,7 @@
     color: #65ece2;
 }
 
-.grid-cols-1 {
+/*.grid-cols-1 {
     grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
 }
 
@@ -164,7 +198,7 @@
 
 .grid-cols-6 {
     grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
-}
+}*/
 </style>
 
 <script setup>
@@ -195,38 +229,47 @@ const isSelected = (option) => {
 
 // Select an option
 const selectOption = (option) => {
-    // Clear the selected options array
-    selectedOptions.value = [];
+    resetError();
 
-    // Add the new option to the array
-    selectedOptions.value.push(option);
+    const index = selectedOptions.value.findIndex(o => o.id === option.id);
+
+    if (index !== -1) {
+        // If the option is already selected, remove it from the array
+        selectedOptions.value = [];
+    } else {
+        // If the option is not selected yet, deselect all other options and select this one
+        selectedOptions.value = [option];
+    }
 };
 
 // Emitting the answer or going back to previous question to the parent component
 const emit = defineEmits(['answer', 'back']);
 
 const error = ref('');
+
 function resetError() {
     error.value = '';
 }
+
 const submitAnswer = () => {
+    resetError();
     const currentQuestion = props.question
 
-    if (currentQuestion.validation && answer.value.trim() === '') {
-        error.value = currentQuestion.error;
-        return;
-    } else if (currentQuestion.validation && currentQuestion.answerType === 'multipleChoice' && selectedOptions.value.length === 0) {
-        error.value = currentQuestion.error;
-        return;
+    if (currentQuestion.validation === true) {
+        if (currentQuestion.answerType === 'text' && answer.value.trim() === '') {
+            error.value = currentQuestion.error;
+            return;
+        } else if (currentQuestion.answerType === 'number' && (answer.value === '' || isNaN(answer.value))) {
+            error.value = currentQuestion.error;
+            return
+        } else if (currentQuestion.validation && currentQuestion.answerType === 'multipleChoice' && selectedOptions.value.length === 0) {
+            error.value = currentQuestion.error;
+            return;
+        }
+
     }
 
     if (props.question.answerType === 'text' || props.question.answerType === 'number') {
-        if (!currentQuestion.validation && answer.value.trim() === '') {
-            // If the answer type is text or number and there is no validation, emit the answer
-            emit('answer', {question: props.question.id, answer: answer.value});
-            console.log(props.question.id, answer.value);
-            return;
-        }
         // If the answer type is text or number, emit the answer
         emit('answer', {question: props.question.id, answer: answer.value});
         console.log(props.question.id, answer.value);

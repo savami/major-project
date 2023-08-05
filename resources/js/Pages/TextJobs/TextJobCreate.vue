@@ -29,35 +29,39 @@ import {useForm} from "@inertiajs/vue3";
 const questions = [
     {
         id: '1',
+        validation: true,
+        error: 'A reference to your text is required',
         title: 'Give your text a title, so you can find it later in your dashboard',
         example: 'Example: Solar panel text, electric scooter text, porsche car text, etc.',
         explanation: 'This is purely for you to be able to find your text later in your dashboard',
         answerType: 'text',
-        required: true
     },
     {
         id: '2',
+        validation: true,
+        error: 'A subject is required',
         title: 'What is the subject of the text?',
         example: 'Example: Marketing agency, electric scooter rentals, plumber company, etc.',
         explanation: 'Choose this carefully, because this is what the text will mainly be about. Keep this as short and concise as possible.',
         answerType: 'text',
-        required: true
     },
     {
         id: '3',
+        validation: true,
+        error: 'A word count is required',
         title: 'How many words should the text be?',
-        example: 'Enter how many words you want the text to be (max. 500)',
-        explanation: 'It will not work if any other characters than numbers are entered',
+        example: 'Enter how many words you want the text to be',
+        explanation: '',
         answerType: 'number',
-        required: true
     },
     {
         id: '4',
+        validation: true,
+        error: 'A tone is required',
         title: 'What is the tone of the text?',
         example: '',
-        explanation: 'This is not important for SEO ratings, but important for the goal of the text and what kind of audience you want to reach. If unsure, leave this blank and skip the question.',
+        explanation: 'This is not important for SEO ratings, but important for the goal of the text and what kind of audience you want to reach. If in doubt, select casual.',
         answerType: 'multipleChoice',
-        required: false,
         options: [
             {
                 id: '1',
@@ -88,11 +92,12 @@ const questions = [
     },
     {
         id: '5',
+        validation: true,
+        error: 'A purpose is required',
         title: 'What is the purpose of the text?',
         example: '',
         answerType: 'multipleChoice',
         explanation: 'Informational for a text that informs the reader. Commercial for a text that sells a product or service. transactional for a text that guides the reader to take action to buy a product, instructional for a text that teaches the reader how to do something, and entertainment for a text that entertains the reader. If in doubt, skip this question.',
-        required: false,
         options: [
             {
                 id: '1',
@@ -123,19 +128,21 @@ const questions = [
     },
     {
         id: '6',
+        validation: true,
+        error: 'A primary keyword is required',
         title: 'What is your primary keyword?',
         example: 'Example: Solar panel, electric scooter, porsche car, etc.',
         answerType: 'text',
         explanation: 'This is the main keyword you want the text to rank for in Google. Only enter your main keyword here. If you add more here, the tool will be confused and inconsistent.',
-        required: true,
     },
     {
         id: '7',
+        validation: true,
+        error: 'At least one secondary keyword is required',
         title: 'What are your secondary keywords?',
         example: 'Example: How to install solar panels, best electric scooter 2023, porsche car engine, etc.',
         explanation: 'These are the secondary keywords you want the text to rank for in Google. Separate each keyword with a comma.',
         answerType: 'text',
-        required: false,
     },
     // {
     //     id: '8',
@@ -147,11 +154,12 @@ const questions = [
     // },
     {
         id: '8',
+        validation: true,
+        error: 'A call to action is required',
         title: 'What is the call to action?',
         example: '',
         explanation: 'Having a call to action is very important. No text is simply random, it has a purpose. The purpose of the text is to get the user to do something. What do you want the user to do after reading the text?',
         answerType: 'multipleChoice',
-        required: false,
         options: [
             {
                 id: '1',
@@ -177,11 +185,11 @@ const questions = [
     },
     {
         id: '9',
+        validation: false,
         title: 'What language should the text be in?',
         example: 'Example: German, French, Spanish, etc.',
         explanation: 'If you want the text to be in English, skip this question. If you want the text to be in another language, enter the language here. Keep in mind that results will be better for English texts',
         answerType: 'text',
-        required: false,
     }
 ];
 
