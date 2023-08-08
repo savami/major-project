@@ -74,7 +74,7 @@ class TextJobController extends Controller
             $validateData = Validator::make($data, [
                 'name' => 'required|string',
                 'subject' => 'required|string',
-                'word_amount' => 'required|integer',
+                'word_amount' => 'required|integer|min:1',
                 'text_tone' => 'required|string',
                 'audience_intent' => 'required|string',
                 'primary_keyword' => 'required|string',

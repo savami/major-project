@@ -20,9 +20,9 @@ class GptService
         $text_tone = $form['text_tone'][0];
         $text_language = $form['text_language'];
 
-        $preset_prompt = "You are an advanced AI language model acting as an expert SEO-copywriter. Your task is to generate high-quality, SEO-optimized text based on the provided details such as subject, primary and secondary keywords, audience intent, call to action, tone, and language. Ensure the text is tailored to the audience's needs and optimized for search engines, using the keywords in a natural and effective manner.";
+        $preset_prompt = "As an expert SEO-copywriter, your task is to generate high-quality, SEO-optimized text based on the provided details by the user such as subject, primary and secondary keywords, audience intent, call to action, tone, and language. Ensure the text is tailored to the audience's needs and optimized for search engines, using the keywords in a natural and effective manner. Make sure to add catchy titles and subheadings to grab the reader's attention, and to break the text into paragraphs. Do NOT use the primary keyword too often, as this negatively impacts the SEO rating. \n\n";
 
-        $prompt = "Write a {$word_amount}-word {$audience_intent} text about {$subject}. The primary keyword is: '{$primary_keyword}', and the secondary keywords are: '{$secondary_keywords}'. The audience intent is {$audience_intent} and the text should target the '{$call_to_action}' call to action. Please use a {$text_tone} tone. \n\n";
+        $prompt = "Write a {$word_amount}-word text about {$subject}. The primary keyword is: '{$primary_keyword}', and the secondary keywords are: '{$secondary_keywords}'. The audience intent is {$audience_intent} and the text should target the '{$call_to_action}' call to action. Please use a {$text_tone} tone. \n\n";
 
         if ($text_language !== "") {
             $prompt .= "The text should be written in English.\n\n";
@@ -41,7 +41,7 @@ class GptService
                 'Content-Type' => 'application/json',
             ])->post('https://api.openai.com/v1/engines/' . $openAiEngine . '/completions', [
                 'prompt' => $prompt,
-                'max_tokens' => $form['word_amount'] * 10, // 10 tokens per word
+                'max_tokens' => 3750, // 3750 tokens is roughly 500 words
                 'temperature' => 0.4, // Not too random, but also not too precise/predictable
                 'top_p' => 1,
                 'n' => 1,
@@ -83,10 +83,47 @@ class GptService
                         'content' => $prompt
                     ]
                 ],
-                'max_tokens' => $form['word_amount'] * 10, // 10 tokens per word
+                'max_tokens' => 3750, // Maximum amount of tokens per request for the GPT-3.5 models minus the amount of messages (4097 - 347 = 3750)
                 'temperature' => 0.5, // Not too random, but also not too precise/predictable
-//            'presence_penalty' => 0.1,
-//            'frequency_penalty' => 0.6,
+                'presence_penalty' => 0.1, // Values from -2 to 2, penalizes words/sentences that are not present in the prompt
+                'frequency_penalty' => 1.2, // Values from -2 to 2, penalizes words/sentences that are repeated too often
+            ]);
+
+            if ($response->successful()) {
+                $result = $response->json();
+                $seo_text = trim($result['choices'][0]['message']['content']);
+
+                Log::info('Prompt: ' . $prompt . ' | Generated SEO Text: ' . $seo_text);
+
+                return $seo_text;
+            } else {
+                Log::error('OpenAI API request failed: ' . $response->body());
+                return null; // return null if the API request fails
+            }
+        }
+
+        // Make the API call (for GPT-3.5 models such as 'gpt-3.5-turbo')
+        if ($openAiEngine === 'gpt-3.5-turbo-16k') {
+
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $openAiApiKey,
+                'Content-Type' => 'application/json',
+            ])->post('https://api.openai.com/v1/chat/completions', [
+                'model' => $openAiEngine,
+                'messages' => [
+                    [
+                        'role' => 'system',
+                        'content' => $preset_prompt
+                    ],
+                    [
+                        'role' => 'user',
+                        'content' => $prompt
+                    ]
+                ],
+                'max_tokens' => 15000, // Maximum amount of tokens per request for the GPT-3.5 models minus the amount of messages (4097 - 347 = 3750)
+                'temperature' => 0.5, // Not too random, but also not too precise/predictable
+                'presence_penalty' => 0.1, // Values from -2 to 2, penalizes words/sentences that are not present in the prompt
+                'frequency_penalty' => 1.2, // Values from -2 to 2, penalizes words/sentences that are repeated too often
             ]);
 
             if ($response->successful()) {
@@ -182,7 +219,7 @@ class GptService
                 'messages' => [
                     [
                         'role' => 'system',
-                        'content' => "You are an AI developed by OpenAI. Your task is to create concise, natural language search queries for finding specific photos on Pexels. Your queries should not include the words 'subject', 'mood', 'elements', 'style', 'photo', 'image' or 'setting', and should be less than 10 words. Do NOT add quotation marks around your query."
+                        'content' => "As an expert in search querying, your task is to create concise, natural language search queries for finding specific photos on Pexels. Your queries should not include the words 'subject', 'mood', 'elements', 'style', 'photo', 'image' or 'setting', and should be less than 10 words. Do NOT add quotation marks around your query."
                     ],
                     [
                         'role' => 'user',
