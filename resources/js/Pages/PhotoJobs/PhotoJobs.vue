@@ -1,15 +1,12 @@
 <template>
     <AnimatedBackgroundLayout>
-        <div class="mx-auto min-w-fit sm:px-6 lg:px-8">
+        <div class="mx-auto min-w-fit sm:px-6 md:px-8 lg:px-18 xl:px-26">
             <div class="px-4 sm:px-6 lg:px-8">
                 <div v-if="photoJobs.length > 0"
                      class="flex flex-col justify-center items-center sm:flex-row sm:items-center px-0.5">
                     <div class="sm:flex-auto mt-8 mb-6">
                         <h1 class="text-base font-semibold leading-6 text-white">Photo Jobs</h1>
-                        <p class="mt-2 text-sm text-white">A list of all the photo jobs you have created in your
-                            account
-                            including their date, title, style, size, and color.
-                        </p>
+                        <p class="mt-2 text-sm text-white">A list of all the photo jobs you have created in your account including their date, title, style, size, and color.</p>
                         <p class="text-sm text-emerald-400 font-bold">Click on either of them to view the results.</p>
                     </div>
                     <div class="sm:ml-16 sm:mt-0 sm:flex-none">

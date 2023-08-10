@@ -1,6 +1,6 @@
 <template>
     <AnimatedBackgroundLayout>
-        <div class="mx-auto min-w-fit sm:px-6 lg:px-8">
+        <div class="mx-auto min-w-fit sm:px-6 md:px-8 lg:px-18 xl:px-26">
             <div class="px-4 sm:px-6 lg:px-8">
                 <div v-if="textJobs.length > 0"
                      class="flex flex-col justify-center items-center sm:flex-row sm:items-center px-0.5">
