@@ -1,8 +1,9 @@
 <template>
     <AnimatedBackgroundLayout>
-        <div class="mx-auto max-w-6xl sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-fit sm:px-6 lg:px-8">
             <div class="px-4 sm:px-6 lg:px-8">
-                <div v-if="photoJobs.length > 0" class="flex flex-col justify-center items-center sm:flex-row sm:items-center px-0.5">
+                <div v-if="photoJobs.length > 0"
+                     class="flex flex-col justify-center items-center sm:flex-row sm:items-center px-0.5">
                     <div class="sm:flex-auto mt-8 mb-6">
                         <h1 class="text-base font-semibold leading-6 text-white">Photo Jobs</h1>
                         <p class="mt-2 text-sm text-white">A list of all the photo jobs you have created in your
@@ -84,7 +85,7 @@
 <script setup>
 import AnimatedBackgroundLayout from "../../Layouts/AnimatedBackgroundLayout.vue";
 import {defineProps} from "vue";
-import { usePage , router } from "@inertiajs/vue3";
+import {usePage, router} from "@inertiajs/vue3";
 import EmptyState from "../../Components/EmptyState.vue";
 
 const page = usePage();
