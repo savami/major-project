@@ -1,6 +1,6 @@
 <template>
     <AnimatedBackgroundLayout>
-        <div class="mx-auto max-w-fit sm:px-6 lg:px-8">
+        <div class="mx-auto min-w-fit sm:px-6 lg:px-8">
             <div class="px-4 sm:px-6 lg:px-8">
                 <div v-if="photoJobs.length > 0"
                      class="flex flex-col justify-center items-center sm:flex-row sm:items-center px-0.5">

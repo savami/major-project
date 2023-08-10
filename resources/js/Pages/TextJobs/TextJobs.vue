@@ -1,6 +1,6 @@
 <template>
     <AnimatedBackgroundLayout>
-        <div class="mx-auto max-w-fit sm:px-6 lg:px-8">
+        <div class="mx-auto min-w-fit sm:px-6 lg:px-8">
             <div class="px-4 sm:px-6 lg:px-8">
                 <div v-if="textJobs.length > 0"
                      class="flex flex-col justify-center items-center sm:flex-row sm:items-center px-0.5">
@@ -20,7 +20,7 @@
                         </button>
                     </div>
                 </div>
-                <div class="mt-8 max-w-7xl flow-root bg-white rounded bg-opacity-20 backdrop-blur-lg drop-shadow-lg">
+                <div class="mt-8 flow-root bg-white rounded bg-opacity-20 backdrop-blur-lg drop-shadow-lg">
                     <div class="flex justify-center w-full">
                         <div v-if="textJobs.length > 0" class="w-full py-4 align-middle sm:px-6 lg:px-8">
                             <table class="min-w-full divide-y divide-white divide-opacity-20 w-full">
