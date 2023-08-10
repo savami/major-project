@@ -66,7 +66,7 @@ const onClickDashboard = () => {
 
             <div class="text-center text-sm text-gray-700 sm:text-left">
                 <div class="flex items-center gap-4">
-                    <a href="https://github.com/savami"
+                    <a href="https://github.com/savami/major-project"
                        class="group inline-flex items-center transition-all focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
                         <svg class="fill-gray-700" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                              viewBox="0 0 24 24">
