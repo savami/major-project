@@ -36,6 +36,7 @@ const questions = [
     {
         id: '1',
         validation: true,
+        form: 'photoJob',
         error: 'This field is required',
         title: 'What is the subject of the photos?',
         example: 'Example: Happy woman, sad man, New York, palm tree, etc.',
@@ -51,18 +52,21 @@ const questions = [
     {
         id: '2',
         validation: true,
+        form: 'photoJob',
         error: 'This field is required',
         title: 'Are there specific elements or styles to be included in the photo?',
         example: 'Example: Vintage, birds, bicycle, car, river, skyscrapers, etc.',
-        explanation: 'This is the secondary parameter, which will be used to further specify the desired result.',
+        explanation: 'This is the secondary parameter, which will be used to further specify the desired result. Specify anything that should be included in the photo.',
         answerType: 'text'
     },
     {
         id: '3',
         validation: false,
+        form: 'photoJob',
         title: 'Do you wish to have a specific orientation?',
         example: '',
-        explanation: 'Selecting one of these might limit the amount of results. It is recommended to skip this question if you are unsure.',
+        explanation: 'Selecting one of these might limit the amount of results.',
+        guidelines: 'It is recommended to skip this question if you are unsure.',
         answerType: 'multipleChoice',
         options: [
             {
@@ -85,9 +89,11 @@ const questions = [
     {
         id: '4',
         validation: false,
-        title: 'Do you prefer a regular or monochrome style photo?',
+        form: 'photoJob',
+        title: 'Which style of photo do you prefer?',
         example: '',
-        explanation: 'Select regular for all results, or monochrome for black and white results.',
+        explanation: 'Specify a specific style of photo that you prefer. Keep in mind that this might limit the amount of results.',
+        guidelines: 'It is recommended to skip this question if you are unsure.',
         answerType: 'multipleChoice',
         options: [
             {
@@ -98,7 +104,7 @@ const questions = [
             {
                 id: '2',
                 title: 'Monochrome',
-                background: '/img/button-backgrounds/monochrome/monochrome-bg-1.jpg'
+                background: '/img/button-backgrounds/monochrome/monochrome.jpg'
             },
         ]
     },
@@ -123,6 +129,7 @@ const questions = [
     {
         id: '5',
         validation: false,
+        form: 'photoJob',
         title: 'What should the size of the photo be?',
         example: '',
         explanation: 'These options affect the resolution of the photos. It is recommended to skip this question if you are unsure. Small (4MP), Medium (12MP), Large (24MP).',
@@ -131,25 +138,27 @@ const questions = [
             {
                 id: '1',
                 title: 'Small',
-                background: '',
+                background: '/img/button-backgrounds/general-bg.jpg',
             },
             {
                 id: '2',
                 title: 'Medium',
-                background: '',
+                background: '/img/button-backgrounds/general-bg.jpg',
             },
             {
                 id: '3',
                 title: 'Large',
-                background: '',
+                background: '/img/button-backgrounds/general-bg.jpg',
             },
         ]
     },
     {
         id: '6',
         validation: false,
+        form: 'photoJob',
         title: 'Which color should be included in the photo?',
-        explanation: 'This field specifies what color should be included in the photo. It is recommended to skip this question if you are unsure. Supported colors: red, orange, yellow, green, turquoise, blue, violet, pink, brown, black, gray, white or any hexadecimal color code (eg. #ffffff).',
+        explanation: 'This field specifies what color should be included in the photo. It is recommended to skip this question if you are unsure.',
+        guidelines: 'Supported colors: red, orange, yellow, green, turquoise, blue, violet, pink, brown, black, gray, white or any hexadecimal color code.',
         example: 'Enter hex code or color name (e.g. #ffffff or white), or leave blank for any color',
         answerType: 'text',
     }

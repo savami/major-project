@@ -166,6 +166,7 @@ class GptService
             if ($form['style'] === "Monochrome") {
                 $query .= "It should be taken in a  " . $form['style'] . " style. ";
             } else {
+                // If user has selected Regular, add nothing to the query
                 $query .= "";
             }
         }

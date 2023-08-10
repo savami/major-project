@@ -7,7 +7,7 @@
         />
 
         <div class="py-12">
-            <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-6">
                 <FormQuestion
                     v-if="currentQuestion"
                     :question="currentQuestion"
@@ -29,6 +29,7 @@ import {useForm} from "@inertiajs/vue3";
 const questions = [
     {
         id: '1',
+        form: 'textJob',
         validation: true,
         error: 'A reference to your text is required',
         title: 'Give your text a title, so you can find it later in your dashboard',
@@ -39,110 +40,118 @@ const questions = [
     {
         id: '2',
         validation: true,
+        form: 'textJob',
         error: 'A subject is required',
         title: 'What is the subject of the text?',
-        example: 'Example: Marketing agency, electric scooter rentals, plumber company, etc.',
-        explanation: 'Choose this carefully, because this is what the text will mainly be about. Keep this as short and concise as possible.',
+        example: 'Example: How to clean an air purifier, electric scooter rentals, plumber company, etc.',
+        explanation: 'Choose this carefully, because this is what the text will mainly be about. A good practice is to enter what the main title of the text would be.',
         answerType: 'text',
     },
     {
         id: '3',
         validation: true,
+        form: 'textJob',
         error: 'A word count is required',
         title: 'How many words should the text be?',
-        example: 'Enter how many words you want the text to be',
+        example: 'Enter the number of words you want the text to be approximately',
         explanation: '',
         answerType: 'number',
     },
     {
         id: '4',
         validation: true,
+        form: 'textJob',
         error: 'A tone is required',
-        title: 'What is the tone of the text?',
+        title: 'What should the tone of the text be?',
         example: '',
-        explanation: 'This is not important for SEO ratings, but important for the goal of the text and what kind of audience you want to reach. If in doubt, select casual.',
+        explanation: 'This is not important for SEO ratings, but it is important for the goal of the text and what kind of audience you want to reach. If in doubt, select straight forward.',
         answerType: 'multipleChoice',
         options: [
             {
                 id: '1',
                 title: 'Professional',
-                background: ''
+                background: '/img/button-backgrounds/text-tone/professional-bg-1.jpg'
             },
             {
                 id: '2',
                 title: 'Casual',
-                background: ''
+                background: '/img/button-backgrounds/text-tone/casual-bg-1.jpg'
             },
             {
                 id: '3',
                 title: 'Straightforward',
-                background: ''
+                background: '/img/button-backgrounds/text-tone/straightforward-bg-1.jpg'
             },
             {
                 id: '4',
                 title: 'Confident',
-                background: '',
+                background: '/img/button-backgrounds/text-tone/confident-bg-1.jpg'
             },
             {
                 id: '5',
                 title: 'Friendly',
-                background: ''
+                background: '/img/button-backgrounds/text-tone/friendly-bg-1.jpg'
             }
         ]
     },
     {
         id: '5',
         validation: true,
+        form: 'textJob',
         error: 'A purpose is required',
         title: 'What is the purpose of the text?',
         example: '',
         answerType: 'multipleChoice',
-        explanation: 'Informational for a text that informs the reader. Commercial for a text that sells a product or service. transactional for a text that guides the reader to take action to buy a product, instructional for a text that teaches the reader how to do something, and entertainment for a text that entertains the reader. If in doubt, skip this question.',
+        explanation: 'Select informational for a text that informs the reader. Select commercial for a text that promotes a product or service. Select transactional for a text that guides the reader to take action to buy a product. Select instructional for a text that teaches the reader how to do something, and entertainment for a text that entertains the reader.',
         options: [
             {
                 id: '1',
                 title: 'Informational',
-                background: ''
+                background: '/img/button-backgrounds/text-purpose/informational-bg-1.jpg'
             },
             {
                 id: '2',
                 title: 'Commercial',
-                background: ''
+                background: '/img/button-backgrounds/text-purpose/commercial-bg-1.jpg'
             },
             {
                 id: '3',
                 title: 'Transactional',
-                background: ''
+                background: '/img/button-backgrounds/text-purpose/transactional-bg-1.jpg'
             },
             {
                 id: '4',
                 title: 'Instructional',
-                background: ''
+                background: '/img/button-backgrounds/text-purpose/instructional-bg-1.jpg'
             },
             {
                 id: '5',
                 title: 'Entertainment',
-                background: ''
+                background: '/img/button-backgrounds/text-purpose/entertainment-bg-1.jpg'
             }
         ]
     },
     {
         id: '6',
         validation: true,
+        form: 'textJob',
         error: 'A primary keyword is required',
         title: 'What is your primary keyword?',
         example: 'Example: Solar panel, electric scooter, porsche car, etc.',
         answerType: 'text',
         explanation: 'This is the main keyword you want the text to rank for in Google. Only enter your main keyword here. If you add more here, the tool will be confused and inconsistent.',
+        guidelines: 'https://dotknowledge.uk/articles/view-article/how-to-find-secondary-keywords-to-enhance-your-seo',
     },
     {
         id: '7',
         validation: true,
+        form: 'textJob',
         error: 'At least one secondary keyword is required',
         title: 'What are your secondary keywords?',
         example: 'Example: How to install solar panels, best electric scooter 2023, porsche car engine, etc.',
         explanation: 'These are the secondary keywords you want the text to rank for in Google. Separate each keyword with a comma.',
         answerType: 'text',
+        guidelines: 'https://dotknowledge.uk/articles/view-article/how-to-find-secondary-keywords-to-enhance-your-seo',
     },
     // {
     //     id: '8',
@@ -155,6 +164,7 @@ const questions = [
     {
         id: '8',
         validation: true,
+        form: 'textJob',
         error: 'A call to action is required',
         title: 'What is the call to action?',
         example: '',
@@ -164,28 +174,29 @@ const questions = [
             {
                 id: '1',
                 title: 'Buy now',
-                background: ''
+                background: '/img/button-backgrounds/text-cta/buynow-bg-1.jpg'
             },
             {
                 id: '2',
                 title: 'Sign up',
-                background: ''
+                background: '/img/button-backgrounds/text-cta/signup-bg-1.jpg'
             },
             {
                 id: '3',
                 title: 'Contact us',
-                background: ''
+                background: '/img/button-backgrounds/text-cta/contactus-bg-1.jpg'
             },
             {
                 id: '4',
                 title: 'Learn more',
-                background: ''
+                background: '/img/button-backgrounds/text-cta/learnmore-bg-1.jpg'
             }
         ]
     },
     {
         id: '9',
         validation: false,
+        form: 'textJob',
         title: 'What language should the text be in?',
         example: 'Example: German, French, Spanish, etc.',
         explanation: 'If you want the text to be in English, skip this question. If you want the text to be in another language, enter the language here. Keep in mind that results will be better for English texts',

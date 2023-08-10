@@ -1,13 +1,30 @@
 <template>
-    <div class="flex flex-col justify-between h-full">
+    <div class="flex flex-col justify-between min-h-fit">
         <div
             class="text-white bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg py-10 px-8 flex flex-col items-center justify-between quiz">
-            <div class="mb-10">
+            <div class="">
                 <h2 class="text-3xl font-bold mb-2.5 text-center">{{ question.title }}</h2>
-                <p v-if="question.explanation" class="text-md text-center max-w-4xl md:h-6 lg:h-1">
+                <p v-if="question.explanation" class="text-md text-center max-w-4xl">
                     {{ question.explanation }}</p>
                 <p v-if="!question.explanation" class="text-md text-center max-w-4xl hidden"></p>
             </div>
+
+            <div v-if="question.guidelines && question.answerType === 'text' && question.form === 'textJob'" class="-mt-10">
+                <a :href="question.guidelines" target="_blank"
+                   class="text-sm font-bold text-center max-w-4xl underline text-lime-300 hover:text-teal-300 transition duration-200">
+                    Please refer to this link for guidelines and more information</a>
+            </div>
+
+            <div v-if="question.guidelines && question.answerType === 'text' && question.form === 'photoJob'" class="-mt-20">
+                <p class="text-sm font-bold text-center max-w-4xl text-lime-300 transition duration-200">
+                    {{ question.guidelines }}
+                </p>
+            </div>
+
+            <div v-if="question.guidelines && question.answerType === 'multipleChoice'">
+                <p class="text-sm font-bold text-center max-w-4xl text-lime-300">{{ question.guidelines }}</p>
+            </div>
+
             <div v-if="question.answerType === 'text'" class="relative z-0 w-2/3 group">
                 <input
                     @keyup.enter="submitAnswer"
@@ -68,7 +85,7 @@
 <!--            </div>-->
 
             <div v-else-if="question.answerType === 'multipleChoice'"
-                 :class="`flex flex-wrap justify-center items-center my-10 font-bold`">
+                 :class="`flex flex-wrap justify-center items-center mt-6 mb-10 font-bold`">
                 <button
                     class="py-2.5 px-4 w-48 h-36 text-center text-lg my-6 mx-5 text-white bg-transparent border-2 rounded-md border-white appearance-none focus:outline-none focus:ring-0 focus:border-2 transition duration-200 bg-cover button-with-bg hover:scale-105"
                     :class="{ 'selected': isSelected(option) }"
