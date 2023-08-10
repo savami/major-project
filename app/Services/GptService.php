@@ -147,7 +147,7 @@ class GptService
         // Construct the query from the form data
         $query = "";
 
-        //
+        // If the user has selected a subject, add it to the query
         if (!empty($form['subject'])) {
             $query .= "The subject of the photo should be " . $form['subject'] . ". ";
         }
@@ -156,10 +156,12 @@ class GptService
 //            $query .= "It should convey a " . $form['mood'] . " mood. ";
 //        }
 
+        // If the user has selected elements, add them to the query
         if (!empty($form['elements'])) {
             $query .= "It should include " . $form['elements'] . ". ";
         }
 
+        // If the user has selected a style, add it to the query
         if (!empty($form['style'])) {
             if ($form['style'] === "Monochrome") {
                 $query .= "It should be taken in a  " . $form['style'] . " style. ";
@@ -210,7 +212,7 @@ class GptService
         }
 
         // Make the API call (for GPT-3.5 models such as 'gpt-3.5-turbo')
-        if ($openAiEngine === 'gpt-3.5-turbo') {
+        if ($openAiEngine === 'gpt-3.5-turbo' || $openAiEngine === 'gpt-3.5-turbo-16k') {
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . $openAiApiKey,
                 'Content-Type' => 'application/json',
