@@ -38,10 +38,10 @@ const logout = () => {
         <div class="min-h-screen bg-lines">
             <nav class="bg-transparent">
                 <!-- Primary Navigation Menu -->
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-transparent">
+                <div class="mx-auto px-4 sm:px-6 lg:px-8 bg-transparent">
                     <div class="flex justify-between h-16">
                         <div class="flex">
-                            <!-- Logo -->
+<!--                             Logo -->
 <!--                            <div class="shrink-0 flex items-center">-->
 <!--                                <Link :href="route('dashboard')">-->
 <!--                                    <ApplicationMark class="block h-9 w-auto" />-->
@@ -205,6 +205,14 @@ const logout = () => {
                     <div class="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
+                        </ResponsiveNavLink>
+
+                        <ResponsiveNavLink :href="route('photoJobs.index')" :active="route().current('photoJobs.index')">
+                            My Photo Searches
+                        </ResponsiveNavLink>
+
+                        <ResponsiveNavLink :href="route('textJobs.index')" :active="route().current('textJobs.index')">
+                            My SEO Texts
                         </ResponsiveNavLink>
                     </div>
 
