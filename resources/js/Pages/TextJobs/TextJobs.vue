@@ -104,7 +104,7 @@
 </style>
 
 <script setup>
-import EmptyState from "../../Components/EmptyState.vue";
+import EmptyState from "../TextJobs/EmptyState.vue";
 import AnimatedBackgroundLayout from "../../Layouts/AnimatedBackgroundLayout.vue";
 import {defineProps} from "vue";
 import {usePage, router} from "@inertiajs/vue3";

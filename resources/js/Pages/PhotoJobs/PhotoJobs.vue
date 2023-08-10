@@ -83,7 +83,7 @@
 import AnimatedBackgroundLayout from "../../Layouts/AnimatedBackgroundLayout.vue";
 import {defineProps} from "vue";
 import {usePage, router} from "@inertiajs/vue3";
-import EmptyState from "../../Components/EmptyState.vue";
+import EmptyState from "./EmptyState.vue";
 
 const page = usePage();
 
