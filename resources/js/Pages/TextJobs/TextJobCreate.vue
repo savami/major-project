@@ -232,29 +232,34 @@ const form = useForm({
     text_language: '',
 });
 
+// Compute the current question based on the current question index
 const currentQuestion = computed(() => questions[currentQuestionIndex.value]);
 
 const nextQuestion = () => {
-    currentQuestionIndex.value++;
+    currentQuestionIndex.value++; // Increment the current question index
     if (currentQuestionIndex.value >= questions.length) {
+        // If the current question index is greater than the total number of questions, submit the form
         submitForm();
     }
 };
 
 const previousQuestion = () => {
     if (currentQuestionIndex.value > 0) {
+        // If the current question index is greater than 0, decrement the current question index
         currentQuestionIndex.value--;
     }
 };
 
-const handleAnswer = (payload) => {
-    const formKey = questionIdToFormKey[payload.question];
-    form[formKey] = payload.answer;
-    nextQuestion();
+// Handle the answer to a question
+const handleAnswer = (payload) => { // Payload is an object containing the question id and the answer
+    const formKey = questionIdToFormKey[payload.question]; // Get the form key from the question id
+    form[formKey] = payload.answer; // Set the form value
+    nextQuestion(); // Go to the next question
 };
 
-const submitForm = async () => {
-    await form.post('/text-jobs');
-    form.reset();
+
+const submitForm = async () => { // Submit the form
+    await form.post('/text-jobs'); // Post the form to the server
+    form.reset(); // Reset the form
 };
 </script>
