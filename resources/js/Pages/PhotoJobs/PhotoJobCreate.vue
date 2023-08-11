@@ -132,8 +132,9 @@ const questions = [
         form: 'photoJob',
         title: 'What should the size of the photo be?',
         example: '',
-        explanation: 'These options affect the resolution of the photos. It is recommended to skip this question if you are unsure. Small (4MP), Medium (12MP), Large (24MP).',
+        explanation: 'These options affect the resolution of the photos. Small (4MP), Medium (12MP), Large (24MP).',
         answerType: 'multipleChoice',
+        guidelines: 'It is recommended to skip this question if you are unsure.',
         options: [
             {
                 id: '1',
