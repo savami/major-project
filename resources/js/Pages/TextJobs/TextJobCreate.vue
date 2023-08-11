@@ -199,7 +199,7 @@ const questions = [
         form: 'textJob',
         title: 'What language should the text be in?',
         example: 'Example: German, French, Spanish, etc.',
-        explanation: 'If you want the text to be in English, skip this question. If you want the text to be in another language, enter the language here. Keep in mind that results will be better for English texts',
+        explanation: 'If you want the text to be in English, skip this question.',
         answerType: 'text',
     }
 ];
